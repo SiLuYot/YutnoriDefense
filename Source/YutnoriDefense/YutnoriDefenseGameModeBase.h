@@ -14,4 +14,7 @@ class YUTNORIDEFENSE_API AYutnoriDefenseGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+
+public:		
+
 };
