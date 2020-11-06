@@ -3,32 +3,21 @@
 
 #include "TowerField.h"
 
-// Sets default values for this component's properties
-UTowerField::UTowerField()
+ATowerField::ATowerField()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
 
-	// ...
-}
-
-
-// Called when the game starts
-void UTowerField::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
+	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+	//tempMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	
 }
 
-
-// Called every frame
-void UTowerField::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void ATowerField::BeginPlay()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	Super::BeginPlay();
 }
 
+void ATowerField::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}

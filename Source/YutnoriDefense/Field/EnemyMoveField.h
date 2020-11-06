@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "BaseField.h"
-#include "LifeField.generated.h"
+#include "EnemyMoveField.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class YUTNORIDEFENSE_API ALifeField : public ABaseField
+class YUTNORIDEFENSE_API AEnemyMoveField : public ABaseField
 {
 	GENERATED_BODY()
 	

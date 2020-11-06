@@ -3,26 +3,23 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "BaseField.h"
 #include "TowerField.generated.h"
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class YUTNORIDEFENSE_API UTowerField : public UActorComponent
+/**
+ * 
+ */
+UCLASS()
+class YUTNORIDEFENSE_API ATowerField : public ABaseField
 {
 	GENERATED_BODY()
+	
+public:
 
-public:	
-	// Sets default values for this component's properties
-	UTowerField();
+	//UPROPERTY()
+	//UStaticMeshComponent* tempMesh;
 
-protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
 };
