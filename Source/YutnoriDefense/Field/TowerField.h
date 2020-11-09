@@ -15,11 +15,11 @@ class YUTNORIDEFENSE_API ATowerField : public ABaseField
 	GENERATED_BODY()
 	
 public:
-
-	//UPROPERTY()
-	//UStaticMeshComponent* tempMesh;
+	ATowerField();
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	/*UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* tempMesh;*/
 };

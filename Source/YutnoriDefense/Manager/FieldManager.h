@@ -30,5 +30,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class ATowerField> SpawnObject;
+	TSubclassOf<class AActor> towerField_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> lifeField_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyCreateField_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyMoveField_BP;
 };

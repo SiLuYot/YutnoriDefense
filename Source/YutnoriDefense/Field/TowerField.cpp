@@ -5,11 +5,7 @@
 
 ATowerField::ATowerField()
 {
-	PrimaryActorTick.bCanEverTick = true;
-
-	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	//tempMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	
 }
 
 void ATowerField::BeginPlay()
