@@ -2,6 +2,8 @@
 
 
 #include "FieldManager.h"
+#include "YutnoriDefense/EnemyControll/EnemyControll.h"
+#include "CoreUObject/Public/UObject/ConstructorHelpers.h"
 
 // Sets default values
 AFieldManager::AFieldManager()
@@ -9,28 +11,30 @@ AFieldManager::AFieldManager()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> towerField(TEXT("Blueprint'/Game/Blueprints/Character/TowerField_BP.TowerField_BP'"));
-	if (towerField.Object)
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyKing(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_King_BP.Enemy_King_BP'"));
+	if (enemyKing.Object)
 	{
-		towerField_BP = (UClass*)towerField.Object->GeneratedClass;
+		enemyKing_BP = (UClass*)enemyKing.Object->GeneratedClass;
 	}
+}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> lifeField(TEXT("Blueprint'/Game/Blueprints/Character/LifeField_BP.LifeField_BP'"));
-	if (lifeField.Object)
-	{
-		lifeField_BP = (UClass*)lifeField.Object->GeneratedClass;
-	}
+void AFieldManager::EnemyCreateStart()
+{
+	FActorSpawnParameters SpawnParams;
+	FRotator rotator;
+	FVector  SpawnLocation;
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyCreateField(TEXT("Blueprint'/Game/Blueprints/Character/EnemyCreateField_BP.EnemyCreateField_BP'"));
-	if (enemyCreateField.Object)
+	UWorld* world = GetWorld();
+	if (world)
 	{
-		enemyCreateField_BP = (UClass*)enemyCreateField.Object->GeneratedClass;
-	}
+		SpawnParams.Owner = this;
+		SpawnLocation = enemyCreateField->GetActorLocation();
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> myMoveField(TEXT("Blueprint'/Game/Blueprints/Character/EnemyMoveField_BP.EnemyMoveField_BP'"));
-	if (myMoveField.Object)
-	{
-		enemyMoveField_BP = (UClass*)myMoveField.Object->GeneratedClass;
+		auto newActor = world->SpawnActor<AActor>(enemyKing_BP, SpawnLocation, rotator, SpawnParams);
+		auto newActorControll = newActor->FindComponentByClass<UEnemyControll>();
+
+		newActorControll->Init(enemyMoveFieldArray[0], 0);
+		enemyArray.Add(newActorControll);
 	}
 }
 
@@ -39,38 +43,7 @@ void AFieldManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FActorSpawnParameters SpawnParams;
-	FRotator rotator;
-	FVector  SpawnLocation;
-
-	UWorld* world = GetWorld();
-	if (world)
-	{
-		UE_LOG(LogTemp, Log, TEXT("towerField_BP"));
-		SpawnParams.Owner = this;
-		SpawnLocation = GetActorLocation();
-		SpawnLocation.Y -= 100.0f;
-		world->SpawnActor<AActor>(towerField_BP, SpawnLocation, rotator, SpawnParams);
-
-		UE_LOG(LogTemp, Log, TEXT("lifeField_BP"));
-		SpawnParams.Owner = this;
-		SpawnLocation = GetActorLocation();
-		SpawnLocation.Y -= 200.0f;
-		world->SpawnActor<AActor>(lifeField_BP, SpawnLocation, rotator, SpawnParams);
-
-		UE_LOG(LogTemp, Log, TEXT("enemyCreateField_BP"));
-		SpawnParams.Owner = this;
-		SpawnLocation = GetActorLocation();
-		SpawnLocation.Y -= 300.0f;
-		world->SpawnActor<AActor>(enemyCreateField_BP, SpawnLocation, rotator, SpawnParams);
-
-		UE_LOG(LogTemp, Log, TEXT("enemyMoveField_BP"));
-		SpawnParams.Owner = this;
-		SpawnLocation = GetActorLocation();
-		SpawnLocation.Y -= 400.0f;
-		world->SpawnActor<AActor>(enemyMoveField_BP, SpawnLocation, rotator, SpawnParams);
-	}
-
+	EnemyCreateStart();
 }
 
 // Called every frame
@@ -78,5 +51,16 @@ void AFieldManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	for (int i = 0; i < enemyArray.Num(); i++)
+	{
+		if (enemyArray[i]->isMoveEnd)
+		{
+			int newIndex = enemyArray[i]->moveFieldIndex + 1;
+			if (enemyMoveFieldArray.IsValidIndex(newIndex))
+			{
+				enemyArray[i]->Init(enemyMoveFieldArray[newIndex], newIndex);
+			}
+		}
+	}
 }
 

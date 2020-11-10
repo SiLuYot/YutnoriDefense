@@ -9,6 +9,7 @@
 #include "YutnoriDefense/Field/EnemyCreateField.h"
 #include "YutnoriDefense/Field/EnemyMoveField.h"
 #include "YutnoriDefense/Field/LifeField.h"
+#include "YutnoriDefense/EnemyControll/EnemyControll.h"
 #include "Engine/World.h"
 #include "FieldManager.generated.h"
 
@@ -21,6 +22,23 @@ public:
 	// Sets default values for this actor's properties
 	AFieldManager();
 
+	UPROPERTY(EditAnywhere)
+	AEnemyCreateField* enemyCreateField;
+
+	UPROPERTY(EditAnywhere)
+	TArray<AEnemyMoveField*> enemyMoveFieldArray;
+
+	UPROPERTY(EditAnywhere)
+	ALifeField* lifeField;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyKing_BP;
+	
+	UPROPERTY(VisibleAnywhere)
+	TArray<UEnemyControll*> enemyArray;
+
+	AActor* testActor;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -29,15 +47,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> towerField_BP;
+	void EnemyCreateStart();
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> lifeField_BP;
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<class AActor> towerField_BP;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> enemyCreateField_BP;
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<class AActor> lifeField_BP;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> enemyMoveField_BP;
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<class AActor> enemyCreateField_BP;
+
+	//UPROPERTY(EditAnywhere)
+	//TSubclassOf<class AActor> enemyMoveField_BP;
 };
