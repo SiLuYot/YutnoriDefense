@@ -60,6 +60,10 @@ void AFieldManager::Tick(float DeltaTime)
 			{
 				enemyArray[i]->Init(enemyMoveFieldArray[newIndex], newIndex);
 			}
+			else 
+			{
+				enemyArray[i]->Init(lifeField, newIndex);
+			}
 		}
 	}
 }

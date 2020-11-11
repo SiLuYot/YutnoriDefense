@@ -7,11 +7,13 @@
 #include "LifeField.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class YUTNORIDEFENSE_API ALifeField : public ABaseField
 {
 	GENERATED_BODY()
-	
+
+    virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+    virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
 };
