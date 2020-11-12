@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "YutnoriDefense/Field/EnemyMoveField.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "EnemyControll.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -15,6 +16,9 @@ class YUTNORIDEFENSE_API UEnemyControll : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UEnemyControll();
+
+	UPROPERTY(EditAnywhere)
+	float moveSpeed;
 
 	UPROPERTY(VisibleAnywhere)
 	int32 moveFieldIndex;

@@ -16,7 +16,7 @@ void UEnemyControll::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
+	GetOwner()->SetActorRotation(FRotator::ZeroRotator);	
 }
 
 // Called every frame
@@ -33,10 +33,13 @@ void UEnemyControll::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	{
 		diff.Normalize();
 
-		auto newPos = diff * 100.0f;
+		auto newPos = diff * moveSpeed;
 		auto nextPos = curPos + newPos * DeltaTime;
 
 		GetOwner()->SetActorLocation(nextPos);		
+
+		FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(nextPos, curPos);
+		GetOwner()->SetActorRotation(Rotator);
 	}
 	else isMoveEnd = true;
 }

@@ -3,24 +3,32 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "YutnoriDefense/Field/BaseField.h"
 #include "YutnoriDefense/Field/TowerField.h"
 #include "YutnoriDefense/Field/EnemyCreateField.h"
 #include "YutnoriDefense/Field/EnemyMoveField.h"
 #include "YutnoriDefense/Field/LifeField.h"
 #include "YutnoriDefense/EnemyControll/EnemyControll.h"
+#include "Containers/Queue.h"
 #include "Engine/World.h"
+#include "GameFramework/Actor.h"
+#include "CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "FieldManager.generated.h"
 
 UCLASS()
 class YUTNORIDEFENSE_API AFieldManager : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AFieldManager();
+
+	UPROPERTY(EditAnywhere)
+	float enemySpawnTimer;
+
+	UPROPERTY(EditAnywhere)
+	float enemySpawnTime;
 
 	UPROPERTY(EditAnywhere)
 	AEnemyCreateField* enemyCreateField;
@@ -32,32 +40,35 @@ public:
 	ALifeField* lifeField;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> enemyKing_BP;
-	
-	UPROPERTY(VisibleAnywhere)
-	TArray<UEnemyControll*> enemyArray;
+	TSubclassOf<class AActor> enemyPawn_BP;
 
-	AActor* testActor;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyRook_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyKnight_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyBishop_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyQueen_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> enemyKing_BP;
+
+	TQueue<UClass*> spawnEnemyQueue;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<UEnemyControll*> fieldEnemyArray;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void EnemyCreateStart();
-
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<class AActor> towerField_BP;
-
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<class AActor> lifeField_BP;
-
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<class AActor> enemyCreateField_BP;
-
-	//UPROPERTY(EditAnywhere)
-	//TSubclassOf<class AActor> enemyMoveField_BP;
+	void EnemyCreateStart(UClass* uClass);
 };
