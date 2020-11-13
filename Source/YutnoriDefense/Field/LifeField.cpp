@@ -2,11 +2,10 @@
 
 
 #include "LifeField.h"
-#include "YutnoriDefense/EnemyControll/EnemyControll.h"
 
 void ALifeField::NotifyActorBeginOverlap(AActor* OtherActor)
 {    
-    auto actorControll = OtherActor->FindComponentByClass<UEnemyControll>();
+    auto actorControll = OtherActor->FindComponentByClass<UEnemyController>();
     if (actorControll != nullptr)
     {
         OtherActor->Destroy();

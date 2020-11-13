@@ -8,7 +8,7 @@
 #include "YutnoriDefense/Field/EnemyCreateField.h"
 #include "YutnoriDefense/Field/EnemyMoveField.h"
 #include "YutnoriDefense/Field/LifeField.h"
-#include "YutnoriDefense/EnemyControll/EnemyControll.h"
+#include "YutnoriDefense/Controller/EnemyController.h"
 #include "Containers/Queue.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
@@ -60,7 +60,7 @@ public:
 	TQueue<UClass*> spawnEnemyQueue;
 
 	UPROPERTY(VisibleAnywhere)
-	TArray<UEnemyControll*> fieldEnemyArray;
+	TArray<UEnemyController*> fieldEnemyArray;
 
 protected:
 	// Called when the game starts or when spawned
@@ -71,4 +71,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void EnemyCreateStart(UClass* uClass);
+
+	/*UFUNCTION(BlueprintCallable)
+	void ClickFieldEvent(ABaseField* field);*/
 };

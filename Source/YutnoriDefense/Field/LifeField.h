@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseField.h"
+#include "YutnoriDefense/Controller/EnemyController.h"
 #include "LifeField.generated.h"
 
 /**

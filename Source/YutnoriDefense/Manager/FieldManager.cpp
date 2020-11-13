@@ -13,37 +13,37 @@ AFieldManager::AFieldManager()
 	enemySpawnTimer = 0;
 	enemySpawnTime = 1.0f;
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyPawn(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_Pawn_BP.Enemy_Pawn_BP'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyPawn(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Pawn_BP.Enemy_Pawn_BP'"));
 	if (enemyPawn.Object)
 	{
 		enemyPawn_BP = (UClass*)enemyPawn.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyRook(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_Rook_BP.Enemy_Rook_BP'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyRook(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Rook_BP.Enemy_Rook_BP'"));
 	if (enemyRook.Object)
 	{
 		enemyRook_BP = (UClass*)enemyRook.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyKnight(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_Knight_BP.Enemy_Knight_BP'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyKnight(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Knight_BP.Enemy_Knight_BP'"));
 	if (enemyKnight.Object)
 	{
 		enemyKnight_BP = (UClass*)enemyKnight.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyBishop(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_Bishop_BP.Enemy_Bishop_BP'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyBishop(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Bishop_BP.Enemy_Bishop_BP'"));
 	if (enemyBishop.Object)
 	{
 		enemyBishop_BP = (UClass*)enemyBishop.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyQueen(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_Queen_BP.Enemy_Queen_BP'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyQueen(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Queen_BP.Enemy_Queen_BP'"));
 	if (enemyQueen.Object)
 	{
 		enemyQueen_BP = (UClass*)enemyQueen.Object->GeneratedClass;
 	}
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyKing(TEXT("Blueprint'/Game/Blueprints/Character/Enemy_King_BP.Enemy_King_BP'"));
+	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyKing(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_King_BP.Enemy_King_BP'"));
 	if (enemyKing.Object)
 	{
 		enemyKing_BP = (UClass*)enemyKing.Object->GeneratedClass;
@@ -73,12 +73,19 @@ void AFieldManager::EnemyCreateStart(UClass* uClass)
 		SpawnLocation = enemyCreateField->GetActorLocation();
 
 		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);
-		auto newActorControll = newActor->FindComponentByClass<UEnemyControll>();
+		auto newActorControll = newActor->FindComponentByClass<UEnemyController>();
 
 		newActorControll->Init(enemyMoveFieldArray[0], 0);
 		fieldEnemyArray.Add(newActorControll);
 	}
 }
+
+//void AFieldManager::ClickFieldEvent(ABaseField* field)
+//{		
+//	UE_LOG(LogTemp, Log, TEXT("Click FieldName :: %s"), *field->GetActorLabel());
+//
+//	
+//}
 
 // Called when the game starts or when spawned
 void AFieldManager::BeginPlay()
@@ -103,7 +110,6 @@ void AFieldManager::Tick(float DeltaTime)
 			spawnEnemyQueue.Dequeue(uclass);
 			EnemyCreateStart(uclass);
 		}
-
 	}
 
 	for (int i = 0; i < fieldEnemyArray.Num(); i++)
@@ -117,6 +123,7 @@ void AFieldManager::Tick(float DeltaTime)
 			}
 			else
 			{
+				//마지막 라이프 필드로 이동
 				fieldEnemyArray[i]->Init(lifeField, newIndex);
 			}
 		}
