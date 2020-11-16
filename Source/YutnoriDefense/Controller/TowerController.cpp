@@ -19,8 +19,6 @@ void UTowerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
 }
 
 
@@ -29,6 +27,19 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+	{
+		AActor* findActor = *It;
+		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+		{
+			auto distance = GetOwner()->GetDistanceTo(findActor);
+
+			if (distance <= 150.0f)
+			{
+				UE_LOG(LogTemp, Log, TEXT("Find Enemy Name :: %s / dis :: %f"), *findActor->GetName(), distance);
+			}
+			
+		}
+	}
 }
 

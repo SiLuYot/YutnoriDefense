@@ -5,7 +5,7 @@
 
 ATowerField::ATowerField()
 {
-	//tempMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	
 }
 
 void ATowerField::BeginPlay()

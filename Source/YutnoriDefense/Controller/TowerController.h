@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "CoreUObject/Public/UObject/UObjectIterator.h"
+#include "Engine/Public/EngineUtils.h"
+#include "Kismet/GameplayStatics.h"
+#include "YutnoriDefense/Controller/EnemyController.h"
 #include "TowerController.generated.h"
 
 
