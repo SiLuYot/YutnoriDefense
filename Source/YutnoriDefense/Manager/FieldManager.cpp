@@ -11,7 +11,7 @@ AFieldManager::AFieldManager()
 	PrimaryActorTick.bCanEverTick = true;
 
 	enemySpawnTimer = 0;
-	enemySpawnTime = 3.0f;
+	enemySpawnTime = 1.5f;
 
 	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyPawn(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Pawn_BP.Enemy_Pawn_BP'"));
 	if (enemyPawn.Object)
@@ -76,7 +76,8 @@ void AFieldManager::EnemyCreateStart(UClass* uClass)
 		newActor->Tags.Add("Enemy");
 
 		auto newActorControll = newActor->FindComponentByClass<UEnemyController>();
-		newActorControll->Init(enemyMoveFieldArray[0], 0);
+		newActorControll->Init();
+		newActorControll->SetNextPos(enemyMoveFieldArray[0], 0);
 
 		fieldEnemyArray.Add(newActorControll);
 	}
@@ -114,12 +115,12 @@ void AFieldManager::Tick(float DeltaTime)
 			int newIndex = fieldEnemyArray[i]->moveFieldIndex + 1;
 			if (enemyMoveFieldArray.IsValidIndex(newIndex))
 			{
-				fieldEnemyArray[i]->Init(enemyMoveFieldArray[newIndex], newIndex);
+				fieldEnemyArray[i]->SetNextPos(enemyMoveFieldArray[newIndex], newIndex);
 			}
 			else
 			{
 				//마지막 라이프 필드로 이동
-				fieldEnemyArray[i]->Init(lifeField, newIndex);
+				fieldEnemyArray[i]->SetNextPos(lifeField, newIndex);
 			}
 		}
 	}
