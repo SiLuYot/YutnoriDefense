@@ -71,7 +71,4 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void EnemyCreateStart(UClass* uClass);
-
-	/*UFUNCTION(BlueprintCallable)
-	void ClickFieldEvent(ABaseField* field);*/
 };

@@ -11,7 +11,7 @@ AFieldManager::AFieldManager()
 	PrimaryActorTick.bCanEverTick = true;
 
 	enemySpawnTimer = 0;
-	enemySpawnTime = 1.0f;
+	enemySpawnTime = 3.0f;
 
 	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyPawn(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Pawn_BP.Enemy_Pawn_BP'"));
 	if (enemyPawn.Object)
@@ -72,20 +72,15 @@ void AFieldManager::EnemyCreateStart(UClass* uClass)
 		SpawnParams.Owner = this;
 		SpawnLocation = enemyCreateField->GetActorLocation();
 
-		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);
-		auto newActorControll = newActor->FindComponentByClass<UEnemyController>();
+		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);		
+		newActor->Tags.Add("Enemy");
 
+		auto newActorControll = newActor->FindComponentByClass<UEnemyController>();
 		newActorControll->Init(enemyMoveFieldArray[0], 0);
+
 		fieldEnemyArray.Add(newActorControll);
 	}
 }
-
-//void AFieldManager::ClickFieldEvent(ABaseField* field)
-//{		
-//	UE_LOG(LogTemp, Log, TEXT("Click FieldName :: %s"), *field->GetActorLabel());
-//
-//	
-//}
 
 // Called when the game starts or when spawned
 void AFieldManager::BeginPlay()
