@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "YutnoriDefense/Field/BaseField.h"
 #include "YutnoriDefense/Field/TowerField.h"
+#include "YutnoriDefense/Controller/TowerController.h"
 #include "CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
 #include "TowerManager.generated.h"

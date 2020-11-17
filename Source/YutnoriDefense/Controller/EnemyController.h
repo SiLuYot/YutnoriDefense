@@ -18,6 +18,9 @@ public:
 	// Sets default values for this component's properties
 	UEnemyController();
 
+	UPROPERTY(VisibleAnywhere)
+	int hp;
+
 	UPROPERTY(EditAnywhere)
 	float moveSpeed;
 
@@ -38,5 +41,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void Init(ABaseField* field, int index);
+	void Init();
+
+	void SetNextPos(ABaseField* field, int index);
+
+	void Damage(float attack);
 };

@@ -20,6 +20,18 @@ public:
 	// Sets default values for this component's properties
 	UTowerController();
 
+	UPROPERTY(VisibleAnywhere)
+	float attack;
+
+	UPROPERTY(VisibleAnywhere)
+	float attackSpeed;
+
+	UPROPERTY(VisibleAnywhere)
+	float attackDistance;
+
+	UPROPERTY(VisibleAnywhere)
+	float timer;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -28,5 +40,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	FTimerHandle CountdownTimerHandle;
+
+	void Init();
+
+	void AttackTimer();
+	void Attack(UEnemyController* enemy);
+
 };

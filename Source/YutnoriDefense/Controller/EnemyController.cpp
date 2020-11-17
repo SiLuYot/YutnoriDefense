@@ -46,9 +46,28 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	else isMoveEnd = true;
 }
 
-void UEnemyController::Init(ABaseField* field, int32 index)
+void UEnemyController::Init()
+{
+	this->NextMoveField = nullptr;
+	this->moveFieldIndex = 0;
+	this->isMoveEnd = false;
+
+	this->hp = 10;
+}
+
+void UEnemyController::SetNextPos(ABaseField* field, int32 index)
 {
 	this->NextMoveField = field;
 	this->moveFieldIndex = index;
 	this->isMoveEnd = false;
+}
+
+void UEnemyController::Damage(float attack)
+{
+	hp -= attack;
+
+	if (hp <= 0)
+	{
+		GetOwner()->Destroy();
+	}
 }

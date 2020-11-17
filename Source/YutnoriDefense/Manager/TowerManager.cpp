@@ -35,6 +35,9 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 			SpawnLocation = field->GetActorLocation();
 
 			auto newActor = world->SpawnActor<AActor>(testTower_BP, SpawnLocation, rotator, SpawnParams);
+
+			auto newActorControll = newActor->FindComponentByClass<UTowerController>();
+			newActorControll->Init();
 		}
 	}
 }
