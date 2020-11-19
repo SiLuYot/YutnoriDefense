@@ -120,7 +120,7 @@ void AFieldManager::Tick(float DeltaTime)
 			else
 			{
 				//마지막 라이프 필드로 이동
-				fieldEnemyArray[i]->SetNextPos(lifeField, newIndex);
+				fieldEnemyArray[i]->SetNextPos(lifeField, -1);
 			}
 		}
 	}

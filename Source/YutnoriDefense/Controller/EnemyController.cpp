@@ -31,7 +31,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	auto diff = nextFieldPos - curPos;
 
-	if (diff.Size() > 1.0f)
+	if (diff.Size() > 3.0f)
 	{
 		diff.Normalize();
 
