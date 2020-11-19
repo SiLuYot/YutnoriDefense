@@ -3,12 +3,26 @@
 
 #include "LifeField.h"
 
+void ALifeField::BeginPlay() 
+{
+    Super::BeginPlay();
+
+    playerHP = 10;
+}
+
 void ALifeField::NotifyActorBeginOverlap(AActor* OtherActor)
 {    
     auto actorControll = OtherActor->FindComponentByClass<UEnemyController>();
     if (actorControll != nullptr)
     {
         OtherActor->Destroy();
+
+        playerHP -= 1;
+        if (playerHP <= 0)
+        {
+            //게임 패배
+            UE_LOG(LogTemp, Log, TEXT("Game End"));
+        }
     }
 }
 
