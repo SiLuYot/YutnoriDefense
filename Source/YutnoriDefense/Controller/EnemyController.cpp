@@ -17,6 +17,9 @@ void UEnemyController::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	meshRoot = Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(TEXT("meshRoot")));
+	uiRoot = Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(TEXT("uiRoot")));
+
 	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
 }
 
@@ -39,20 +42,21 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		auto nextPos = curPos + newPos * DeltaTime;
 
 		GetOwner()->SetActorLocation(nextPos);
-
-		FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(nextPos, curPos);
-		GetOwner()->SetActorRotation(Rotator);
+			
+		FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(nextPos, curPos);		
+		meshRoot->SetWorldRotation(Rotator);
 	}
 	else isMoveEnd = true;
 }
 
 void UEnemyController::Init()
-{
+{	
 	this->NextMoveField = nullptr;
 	this->moveFieldIndex = 0;
 	this->isMoveEnd = false;
 
 	this->hp = 10;
+	this->moveSpeed = 150;
 }
 
 void UEnemyController::SetNextPos(ABaseField* field, int32 index)
@@ -65,9 +69,9 @@ void UEnemyController::SetNextPos(ABaseField* field, int32 index)
 void UEnemyController::Damage(float attack)
 {
 	hp -= attack;
+}
 
-	if (hp <= 0)
-	{
-		GetOwner()->Destroy();
-	}
+float UEnemyController::GetHP()
+{
+	return hp;
 }
