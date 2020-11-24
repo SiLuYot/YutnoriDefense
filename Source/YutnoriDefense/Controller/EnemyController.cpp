@@ -21,6 +21,7 @@ void UEnemyController::BeginPlay()
 	uiRoot = Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(TEXT("uiRoot")));
 
 	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
+	meshRoot->SetWorldRotation(FRotator::ZeroRotator);
 }
 
 

@@ -18,8 +18,9 @@ UTowerController::UTowerController()
 void UTowerController::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));	
+
+	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
+	GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
 }
 
 
@@ -41,36 +42,36 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 			auto distance = GetOwner()->GetDistanceTo(findActor);
 
 			if (distance <= attackDistance)
-			{								
+			{
 				auto curPos = GetOwner()->GetActorLocation();
 				auto targetPos = findActor->GetActorLocation();
 
 				FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(targetPos, curPos);
 				GetOwner()->SetActorRotation(Rotator);
 				GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
-				
+
 				if (timer >= attackSpeed)
 				{
 					timer = 0;
 
 					auto enemy = findActor->FindComponentByClass<UEnemyController>();
-					if (enemy != nullptr) 
+					if (enemy != nullptr)
 					{
 						Attack(enemy);
 					}
-						
+
 				}
 
 				/*UE_LOG(LogTemp, Log, TEXT("Find Enemy Name :: %s / dis :: %f"), *findActor->GetName(), distance);
 				UE_LOG(LogTemp, Log, TEXT("pos1 :: %s pos2 :: %s"), *curPos.ToString(), *targetPos.ToString());*/
 
 				break;
-			}			
+			}
 		}
 	}
 }
 
-void UTowerController::Init() 
+void UTowerController::Init()
 {
 	this->attack = 1.0f;
 	this->attackSpeed = 1.0f;
