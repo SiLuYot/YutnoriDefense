@@ -21,7 +21,19 @@ public:
 	ATowerManager();
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> testTower_BP;
+	TSubclassOf<class AActor> tower_Do_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> tower_Gae_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> tower_Geol_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> tower_Yut_BP;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AActor> tower_Mo_BP;
 
 protected:
 	// Called when the game starts or when spawned

@@ -9,10 +9,34 @@ ATowerManager::ATowerManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	static ConstructorHelpers::FObjectFinder<UBlueprint> testTower(TEXT("Blueprint'/Game/Blueprints/Character/Tower/TestTower_BP.TestTower_BP'"));
-	if (testTower.Object)
+	static ConstructorHelpers::FObjectFinder<UBlueprint> doTower(TEXT("Blueprint'/Game/Blueprints/Character/Tower/Tower_Do_BP.Tower_Do_BP'"));
+	if (doTower.Object)
 	{
-		testTower_BP = (UClass*)testTower.Object->GeneratedClass;
+		tower_Do_BP = (UClass*)doTower.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> gaeTower(TEXT("Blueprint'/Game/Blueprints/Character/Tower/Tower_Gae_BP.Tower_Gae_BP'"));
+	if (gaeTower.Object)
+	{
+		tower_Gae_BP = (UClass*)gaeTower.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> geolTower(TEXT("Blueprint'/Game/Blueprints/Character/Tower/Tower_Geol_BP.Tower_Geol_BP'"));
+	if (geolTower.Object)
+	{
+		tower_Geol_BP = (UClass*)geolTower.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> yutTower(TEXT("Blueprint'/Game/Blueprints/Character/Tower/Tower_Yut_BP.Tower_Yut_BP'"));
+	if (yutTower.Object)
+	{
+		tower_Yut_BP = (UClass*)yutTower.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> moTower(TEXT("Blueprint'/Game/Blueprints/Character/Tower/Tower_Mo_BP.Tower_Mo_BP'"));
+	if (moTower.Object)
+	{
+		tower_Mo_BP = (UClass*)moTower.Object->GeneratedClass;
 	}
 
 }
@@ -34,7 +58,7 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 			SpawnParams.Owner = this;
 			SpawnLocation = field->GetActorLocation();
 
-			auto newActor = world->SpawnActor<AActor>(testTower_BP, SpawnLocation, rotator, SpawnParams);
+			auto newActor = world->SpawnActor<AActor>(tower_Do_BP, SpawnLocation, rotator, SpawnParams);
 
 			auto newActorControll = newActor->FindComponentByClass<UTowerController>();
 			newActorControll->Init();
