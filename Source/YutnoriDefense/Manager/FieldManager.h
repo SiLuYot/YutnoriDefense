@@ -58,9 +58,9 @@ public:
 	TSubclassOf<class AActor> enemyKing_BP;
 
 	TQueue<UClass*> spawnEnemyQueue;
-
-	UPROPERTY(VisibleAnywhere)
+	
 	TArray<UEnemyController*> fieldEnemyArray;
+	TArray<UEnemyController*> fieldEnemyRemoveArray;
 
 protected:
 	// Called when the game starts or when spawned

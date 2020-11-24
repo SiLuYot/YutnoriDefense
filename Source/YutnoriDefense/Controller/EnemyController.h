@@ -19,9 +19,9 @@ public:
 	UEnemyController();
 
 	UPROPERTY(VisibleAnywhere)
-	int hp;
+	float hp;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	float moveSpeed;
 
 	UPROPERTY(VisibleAnywhere)
@@ -32,6 +32,15 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Array)
 	ABaseField* NextMoveField;
+
+	UFUNCTION(BlueprintCallable)
+	float GetHP();
+
+	UPROPERTY()
+	USceneComponent* meshRoot;
+
+	UPROPERTY()
+	USceneComponent* uiRoot;
 
 protected:
 	// Called when the game starts

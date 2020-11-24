@@ -33,6 +33,9 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
 	{
 		AActor* findActor = *It;
+		if (findActor == nullptr)
+			continue;
+
 		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
 		{
 			auto distance = GetOwner()->GetDistanceTo(findActor);
@@ -49,7 +52,13 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				if (timer >= attackSpeed)
 				{
 					timer = 0;
-					Attack(findActor->FindComponentByClass<UEnemyController>());
+
+					auto enemy = findActor->FindComponentByClass<UEnemyController>();
+					if (enemy != nullptr) 
+					{
+						Attack(enemy);
+					}
+						
 				}
 
 				/*UE_LOG(LogTemp, Log, TEXT("Find Enemy Name :: %s / dis :: %f"), *findActor->GetName(), distance);

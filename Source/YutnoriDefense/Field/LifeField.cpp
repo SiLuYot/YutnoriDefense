@@ -15,7 +15,8 @@ void ALifeField::NotifyActorBeginOverlap(AActor* OtherActor)
     auto actorControll = OtherActor->FindComponentByClass<UEnemyController>();
     if (actorControll != nullptr)
     {
-        OtherActor->Destroy();
+        //OtherActor->Destroy();
+        actorControll->hp = 0;
 
         playerHP -= 1;
         if (playerHP <= 0)

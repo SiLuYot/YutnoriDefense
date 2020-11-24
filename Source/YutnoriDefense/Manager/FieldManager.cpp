@@ -2,6 +2,7 @@
 
 
 #include "FieldManager.h"
+#include <functional>
 
 
 // Sets default values
@@ -72,7 +73,8 @@ void AFieldManager::EnemyCreateStart(UClass* uClass)
 		SpawnParams.Owner = this;
 		SpawnLocation = enemyCreateField->GetActorLocation();
 
-		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);		
+		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);
+		//auto newActor = world->SpawnActor<AActor>(AEnemy::StaticClass(), SpawnLocation, rotator, SpawnParams);
 		newActor->Tags.Add("Enemy");
 
 		auto newActorControll = newActor->FindComponentByClass<UEnemyController>();
@@ -108,21 +110,42 @@ void AFieldManager::Tick(float DeltaTime)
 		}
 	}
 
+	
 	for (int i = 0; i < fieldEnemyArray.Num(); i++)
 	{
-		if (fieldEnemyArray[i]->isMoveEnd)
+		if (fieldEnemyArray[i] != NULL)
 		{
-			int newIndex = fieldEnemyArray[i]->moveFieldIndex + 1;
-			if (enemyMoveFieldArray.IsValidIndex(newIndex))
+			if (fieldEnemyArray[i]->isMoveEnd)
 			{
-				fieldEnemyArray[i]->SetNextPos(enemyMoveFieldArray[newIndex], newIndex);
+				int newIndex = fieldEnemyArray[i]->moveFieldIndex + 1;
+				if (enemyMoveFieldArray.IsValidIndex(newIndex))
+				{
+					fieldEnemyArray[i]->SetNextPos(enemyMoveFieldArray[newIndex], newIndex);
+				}
+				else
+				{
+					//마지막 라이프 필드로 이동
+					fieldEnemyArray[i]->SetNextPos(lifeField, -1);
+				}
 			}
-			else
+
+			if (fieldEnemyArray[i]->GetHP() <= 0)
 			{
-				//마지막 라이프 필드로 이동
-				fieldEnemyArray[i]->SetNextPos(lifeField, -1);
+				fieldEnemyRemoveArray.Add(fieldEnemyArray[i]);
+				
 			}
 		}
+	}
+
+	if (fieldEnemyRemoveArray.Num() > 0)
+	{
+		for (int i = 0; i < fieldEnemyRemoveArray.Num(); i++)
+		{
+			fieldEnemyArray.Remove(fieldEnemyRemoveArray[i]);
+			fieldEnemyRemoveArray[i]->GetOwner()->Destroy();
+			fieldEnemyRemoveArray[i] = NULL;
+		}
+		fieldEnemyRemoveArray.Reset();
 	}
 }
 
