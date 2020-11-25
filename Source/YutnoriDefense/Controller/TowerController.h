@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
+#include "Runtime/Engine/Classes/Animation/AnimInstance.h"
 #include "CoreUObject/Public/UObject/UObjectIterator.h"
 #include "Engine/Public/EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
@@ -32,6 +34,14 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	float timer;
 
+	UPROPERTY(VisibleAnywhere)
+	UAnimMontage* attackMontage;
+
+	UEnemyController* target;
+
+	USkeletalMeshComponent* meshRoot;
+	UAnimInstance* animRoot;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -43,8 +53,12 @@ public:
 	FTimerHandle CountdownTimerHandle;
 
 	void Init();
-
-	void AttackTimer();
+	
 	void Attack(UEnemyController* enemy);
 
+	UFUNCTION(BlueprintCallable)
+	void AttackStart();
+
+	UFUNCTION(BlueprintCallable)
+	void AttackEnd();
 };

@@ -2,6 +2,7 @@
 
 
 #include "TowerController.h"
+#include <Runtime\Engine\Classes\Animation\SkeletalMeshActor.h>
 
 // Sets default values for this component's properties
 UTowerController::UTowerController()
@@ -10,7 +11,11 @@ UTowerController::UTowerController()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> attackClass(TEXT("AnimMontage'/Game/ModularAnimalKnightsPolyart/Animations/Attack01Anim_Montage.Attack01Anim_Montage'"));
+	if (attackClass.Succeeded())
+	{
+		attackMontage = attackClass.Object;
+	}
 }
 
 
@@ -18,6 +23,10 @@ UTowerController::UTowerController()
 void UTowerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	auto root = Cast<ASkeletalMeshActor>(GetOwner());
+	meshRoot = root->GetSkeletalMeshComponent();
+	animRoot = meshRoot->GetAnimInstance();
 
 	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
 	GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
@@ -28,46 +37,50 @@ void UTowerController::BeginPlay()
 void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	timer += DeltaTime;
 
-	for (TActorIterator<AActor> It(GetWorld()); It; ++It)
+	//공격 대상이 없을때
+	if (target == nullptr)
 	{
-		AActor* findActor = *It;
-		if (findActor == nullptr)
-			continue;
-
-		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+		//월드의 모든 액터 검색
+		for (TActorIterator<AActor> It(GetWorld()); It; ++It)
 		{
-			auto distance = GetOwner()->GetDistanceTo(findActor);
-
-			if (distance <= attackDistance)
+			AActor* findActor = *It;
+			if (findActor == nullptr)
 			{
-				auto curPos = GetOwner()->GetActorLocation();
-				auto targetPos = findActor->GetActorLocation();
+				continue;
+			}
 
-				FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(targetPos, curPos);
-				GetOwner()->SetActorRotation(Rotator);
-				GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
+			//범위 안 적 찾기
+			if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+			{
+				auto distance = GetOwner()->GetDistanceTo(findActor);
 
-				if (timer >= attackSpeed)
+				//범위 안에 있다면
+				if (distance <= attackDistance)
 				{
-					timer = 0;
+					//대상 갱신
+					target = findActor->FindComponentByClass<UEnemyController>();
 
-					auto enemy = findActor->FindComponentByClass<UEnemyController>();
-					if (enemy != nullptr)
-					{
-						Attack(enemy);
-					}
+					//애니매이션 플레이 시작
+					animRoot->Montage_Play(attackMontage);
 
+					break;
 				}
-
-				/*UE_LOG(LogTemp, Log, TEXT("Find Enemy Name :: %s / dis :: %f"), *findActor->GetName(), distance);
-				UE_LOG(LogTemp, Log, TEXT("pos1 :: %s pos2 :: %s"), *curPos.ToString(), *targetPos.ToString());*/
-
-				break;
 			}
 		}
+	}
+
+	//범위 안 적이 있을때
+	if (target != nullptr)
+	{
+		//타워가 적을 바라보게 회전
+		auto curPos = GetOwner()->GetActorLocation();
+		auto targetPos = target->GetOwner()->GetActorLocation();
+
+		FRotator Rotator = UKismetMathLibrary::FindLookAtRotation(targetPos, curPos);
+		GetOwner()->SetActorRotation(Rotator);
+		GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
 	}
 }
 
@@ -81,5 +94,19 @@ void UTowerController::Init()
 
 void UTowerController::Attack(UEnemyController* enemy)
 {
-	enemy->Damage(attack);
+	if (enemy != nullptr)
+		enemy->Damage(attack);
+}
+
+void UTowerController::AttackStart()
+{
+	Attack(target);
+}
+
+void UTowerController::AttackEnd()
+{
+	//타이머 초기화
+	timer = 0;
+	//타겟 초기화
+	target = nullptr;
 }
