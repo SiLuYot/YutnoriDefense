@@ -37,6 +37,16 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UAnimMontage* attackMontage;
 
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> iceBlitzParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> fireBallParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> explosionParticle;
+
+	AActor* skillParticle;
 	UEnemyController* target;
 
 	USkeletalMeshComponent* meshRoot;
