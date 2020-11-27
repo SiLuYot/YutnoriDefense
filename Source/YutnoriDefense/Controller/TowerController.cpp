@@ -16,6 +16,24 @@ UTowerController::UTowerController()
 	{
 		attackMontage = attackClass.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> iceBlitz(TEXT("Blueprint'/Game/Blueprints/FX/IceBlitzParticle.IceBlitzParticle'"));
+	if (iceBlitz.Object)
+	{
+		iceBlitzParticle = (UClass*)iceBlitz.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> fireBall(TEXT("Blueprint'/Game/Blueprints/FX/fireBallParticle.fireBallParticle'"));
+	if (fireBall.Object)
+	{
+		fireBallParticle = (UClass*)fireBall.Object->GeneratedClass;
+	}
+
+	static ConstructorHelpers::FObjectFinder<UBlueprint> explosion(TEXT("Blueprint'/Game/Blueprints/FX/explosionParticle.explosionParticle'"));
+	if (explosion.Object)
+	{
+		explosionParticle = (UClass*)explosion.Object->GeneratedClass;
+	}
 }
 
 
@@ -65,6 +83,12 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 					//애니매이션 플레이 시작
 					animRoot->Montage_Play(attackMontage);
 
+					//스킬 이펙트 생성
+					UWorld* world = GetWorld();
+					FVector  SpawnLocation = target->GetOwner()->GetActorLocation();
+					FRotator rotator;
+					skillParticle = world->SpawnActor<AActor>(iceBlitzParticle, SpawnLocation, rotator);
+
 					break;
 				}
 			}
@@ -109,4 +133,10 @@ void UTowerController::AttackEnd()
 	timer = 0;
 	//타겟 초기화
 	target = nullptr;
+	//스킬 이펙트 파괴
+	if (skillParticle != nullptr)
+	{
+		skillParticle->Destroy();
+		skillParticle = nullptr;
+	}
 }
