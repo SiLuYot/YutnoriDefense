@@ -86,7 +86,7 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 					//스킬 이펙트 생성
 					UWorld* world = GetWorld();
 					FVector  SpawnLocation = target->GetOwner()->GetActorLocation();
-					FRotator rotator;
+					FRotator rotator = FRotator::ZeroRotator;
 					skillParticle = world->SpawnActor<AActor>(iceBlitzParticle, SpawnLocation, rotator);
 
 					break;
