@@ -10,8 +10,22 @@
 #include "Engine/Public/EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "YutnoriDefense/Controller/EnemyController.h"
+#include "YutnoriDefense/Controller/SkillContoller.h"
 #include "TowerController.generated.h"
 
+
+class TowerData
+{
+public:
+	TSubclassOf<class AActor> towerBP;
+	SkillData skillData;
+
+	TowerData(TSubclassOf<class AActor> towerBP, SkillData skillData)
+	{
+		this->towerBP = towerBP;
+		this->skillData = skillData;
+	}
+};
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class YUTNORIDEFENSE_API UTowerController : public UActorComponent
@@ -37,20 +51,14 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UAnimMontage* attackMontage;
 
-	UPROPERTY(VisibleAnywhere)
-	TSubclassOf<class AActor> iceBlitzParticle;
-
-	UPROPERTY(VisibleAnywhere)
-	TSubclassOf<class AActor> fireBallParticle;
-
-	UPROPERTY(VisibleAnywhere)
-	TSubclassOf<class AActor> explosionParticle;
-
-	AActor* skillParticle;
 	UEnemyController* target;
 
 	USkeletalMeshComponent* meshRoot;
 	UAnimInstance* animRoot;
+	USceneComponent* shootRoot;
+
+	SkillData skillData;
+	SkillContoller* skillController;
 
 protected:
 	// Called when the game starts
@@ -62,7 +70,7 @@ public:
 
 	FTimerHandle CountdownTimerHandle;
 
-	void Init();
+	void Init(SkillData skillData);
 	
 	void Attack(UEnemyController* enemy);
 

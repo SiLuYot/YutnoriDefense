@@ -39,6 +39,12 @@ ATowerManager::ATowerManager()
 		tower_Mo_BP = (UClass*)moTower.Object->GeneratedClass;
 	}
 
+	clickCount = 0;
+	towerDataArray.Add(new TowerData(tower_Do_BP, SkillData(0, SkillType::OneShoot)));
+	towerDataArray.Add(new TowerData(tower_Gae_BP, SkillData(0, SkillType::OneShoot)));
+	towerDataArray.Add(new TowerData(tower_Geol_BP, SkillData(1, SkillType::TraceAndExplosion)));
+	towerDataArray.Add(new TowerData(tower_Yut_BP, SkillData(0, SkillType::OneShoot)));
+	towerDataArray.Add(new TowerData(tower_Mo_BP, SkillData(0, SkillType::OneShoot)));
 }
 
 void ATowerManager::ClickFieldEvent(ABaseField* field)
@@ -57,11 +63,16 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 		{
 			SpawnParams.Owner = this;
 			SpawnLocation = field->GetActorLocation();
+			
+			auto findData = towerDataArray[clickCount];
 
-			auto newActor = world->SpawnActor<AActor>(tower_Do_BP, SpawnLocation, rotator, SpawnParams);
+			clickCount += 1;
+			if (clickCount >= towerDataArray.Num())
+				clickCount = 0;
 
+			auto newActor = world->SpawnActor<AActor>(findData->towerBP, SpawnLocation, rotator, SpawnParams);
 			auto newActorControll = newActor->FindComponentByClass<UTowerController>();
-			newActorControll->Init();
+			newActorControll->Init(findData->skillData);
 		}
 	}
 }

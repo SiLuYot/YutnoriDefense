@@ -49,7 +49,7 @@ AFieldManager::AFieldManager()
 	{
 		enemyKing_BP = (UClass*)enemyKing.Object->GeneratedClass;
 	}
-
+	
 	spawnEnemyQueue.Enqueue(enemyPawn_BP);
 	spawnEnemyQueue.Enqueue(enemyRook_BP);
 	spawnEnemyQueue.Enqueue(enemyKnight_BP);

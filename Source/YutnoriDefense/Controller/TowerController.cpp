@@ -7,32 +7,12 @@
 // Sets default values for this component's properties
 UTowerController::UTowerController()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> attackClass(TEXT("AnimMontage'/Game/ModularAnimalKnightsPolyart/Animations/Attack01Anim_Montage.Attack01Anim_Montage'"));
 	if (attackClass.Succeeded())
 	{
 		attackMontage = attackClass.Object;
-	}
-
-	static ConstructorHelpers::FObjectFinder<UBlueprint> iceBlitz(TEXT("Blueprint'/Game/Blueprints/FX/IceBlitzParticle.IceBlitzParticle'"));
-	if (iceBlitz.Object)
-	{
-		iceBlitzParticle = (UClass*)iceBlitz.Object->GeneratedClass;
-	}
-
-	static ConstructorHelpers::FObjectFinder<UBlueprint> fireBall(TEXT("Blueprint'/Game/Blueprints/FX/fireBallParticle.fireBallParticle'"));
-	if (fireBall.Object)
-	{
-		fireBallParticle = (UClass*)fireBall.Object->GeneratedClass;
-	}
-
-	static ConstructorHelpers::FObjectFinder<UBlueprint> explosion(TEXT("Blueprint'/Game/Blueprints/FX/explosionParticle.explosionParticle'"));
-	if (explosion.Object)
-	{
-		explosionParticle = (UClass*)explosion.Object->GeneratedClass;
 	}
 }
 
@@ -45,6 +25,7 @@ void UTowerController::BeginPlay()
 	auto root = Cast<ASkeletalMeshActor>(GetOwner());
 	meshRoot = root->GetSkeletalMeshComponent();
 	animRoot = meshRoot->GetAnimInstance();
+	shootRoot = Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(TEXT("shootRoot")));
 
 	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
 	GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
@@ -84,10 +65,18 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 					animRoot->Montage_Play(attackMontage);
 
 					//스킬 이펙트 생성
-					UWorld* world = GetWorld();
-					FVector  SpawnLocation = target->GetOwner()->GetActorLocation();
+					FVector location = FVector::ZeroVector;
+
+					if (skillData.type == SkillType::OneShoot)
+						location = target->GetOwner()->GetActorLocation();
+
+					else if (skillData.type == SkillType::TraceAndExplosion)
+						location = shootRoot->GetComponentLocation();
+
 					FRotator rotator = FRotator::ZeroRotator;
-					skillParticle = world->SpawnActor<AActor>(iceBlitzParticle, SpawnLocation, rotator);
+
+					SkillCreateData skillCreateData = SkillCreateData(skillData, location, rotator, findActor, attack);
+					skillController->CreateParticle(skillCreateData);
 
 					break;
 				}
@@ -106,14 +95,19 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		GetOwner()->SetActorRotation(Rotator);
 		GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
 	}
+
+	//스킬 업데이트
+	skillController->Update(DeltaTime);
 }
 
-void UTowerController::Init()
+void UTowerController::Init(SkillData data)
 {
 	this->attack = 1.0f;
 	this->attackSpeed = 1.0f;
 	this->attackDistance = 200.0f;
 	this->timer = 0;
+	this->skillController = new SkillContoller(GetWorld());
+	this->skillData = data;
 }
 
 void UTowerController::Attack(UEnemyController* enemy)
@@ -124,7 +118,7 @@ void UTowerController::Attack(UEnemyController* enemy)
 
 void UTowerController::AttackStart()
 {
-	Attack(target);
+	skillController->AttackStartEvent();
 }
 
 void UTowerController::AttackEnd()
@@ -133,10 +127,6 @@ void UTowerController::AttackEnd()
 	timer = 0;
 	//타겟 초기화
 	target = nullptr;
-	//스킬 이펙트 파괴
-	if (skillParticle != nullptr)
-	{
-		skillParticle->Destroy();
-		skillParticle = nullptr;
-	}
+
+	skillController->AttackEndEvent();
 }

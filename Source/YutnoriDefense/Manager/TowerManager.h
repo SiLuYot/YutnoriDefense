@@ -35,6 +35,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<class AActor> tower_Mo_BP;
 
+	TArray<TowerData*> towerDataArray;
+
+	int clickCount;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
