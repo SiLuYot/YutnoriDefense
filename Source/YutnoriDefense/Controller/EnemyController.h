@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetHP();
 
+	UFUNCTION(BlueprintCallable)
+	void SetStat(float _hp, float _moveSpeed);
+
 	UPROPERTY()
 	USceneComponent* meshRoot;
 
