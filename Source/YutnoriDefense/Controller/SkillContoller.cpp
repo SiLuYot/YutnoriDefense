@@ -7,7 +7,7 @@ SkillContoller::SkillContoller(UWorld* uWorld)
 {
 	this->world = uWorld;
 
-	UBlueprint* iceBlitz = Cast<UBlueprint>(StaticLoadObject(UBlueprint::StaticClass(), NULL, TEXT("Blueprint'/Game/Blueprints/FX/IceBlitzParticle.IceBlitzParticle'")));
+	UBlueprint* iceBlitz = Cast<UBlueprint>(StaticLoadObject(UBlueprint::StaticClass(), NULL, TEXT("Blueprint'/Game/Blueprints/FX/IceBlitzParticle.iceBlitzParticle'")));
 	if (iceBlitz)
 	{
 		iceBlitzParticle = (UClass*)iceBlitz->GeneratedClass;
@@ -23,6 +23,18 @@ SkillContoller::SkillContoller(UWorld* uWorld)
 	if (explosion)
 	{
 		explosionParticle = (UClass*)explosion->GeneratedClass;
+	}
+
+	UBlueprint* iceBall = Cast<UBlueprint>(StaticLoadObject(UBlueprint::StaticClass(), NULL, TEXT("Blueprint'/Game/Blueprints/FX/iceBallParticle.iceBallParticle'")));
+	if (iceBall)
+	{
+		iceBallParticle = (UClass*)iceBall->GeneratedClass;
+	}
+
+	UBlueprint* iceBallExplosion = Cast<UBlueprint>(StaticLoadObject(UBlueprint::StaticClass(), NULL, TEXT("Blueprint'/Game/Blueprints/FX/iceexplosionParticle.iceExplosionParticle'")));
+	if (iceBallExplosion)
+	{
+		iceBallExplosionParticle = (UClass*)iceBallExplosion->GeneratedClass;
 	}
 
 	UBlueprint* mixedBall = Cast<UBlueprint>(StaticLoadObject(UBlueprint::StaticClass(), NULL, TEXT("Blueprint'/Game/Blueprints/FX/mixedBallParticle.mixedBallParticle'")));
@@ -58,12 +70,14 @@ SkillContoller::SkillContoller(UWorld* uWorld)
 	particleArray.Add(NULL);					//0
 	particleArray.Add(iceBlitzParticle);		//1
 	particleArray.Add(fireBallParticle);		//2
-	particleArray.Add(explosionParticle);
-	particleArray.Add(mixedBallParticle);		//4
+	particleArray.Add(explosionParticle);		
+	particleArray.Add(iceBallParticle);			//4
+	particleArray.Add(iceBallExplosionParticle);
+	particleArray.Add(mixedBallParticle);		//6
 	particleArray.Add(mixedExplosionParticle);
-	particleArray.Add(vortexParticle);			//6
-	particleArray.Add(lightingVortexParticle);	//7
-	particleArray.Add(fireVortexParticle);		//8
+	particleArray.Add(vortexParticle);			//8
+	particleArray.Add(lightingVortexParticle);	//9
+	particleArray.Add(fireVortexParticle);		//10
 }
 
 SkillContoller::~SkillContoller()

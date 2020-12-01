@@ -72,6 +72,12 @@ public:
 	TSubclassOf<class AActor> explosionParticle;
 
 	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> iceBallParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> iceBallExplosionParticle;
+
+	UPROPERTY(VisibleAnywhere)
 	TSubclassOf<class AActor> mixedBallParticle;
 
 	UPROPERTY(VisibleAnywhere)
