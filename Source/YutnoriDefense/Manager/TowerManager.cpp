@@ -40,11 +40,11 @@ ATowerManager::ATowerManager()
 	}
 
 	clickCount = 0;
-	towerDataArray.Add(new TowerData(tower_Do_BP, SkillData(0, SkillType::OneShoot)));
-	towerDataArray.Add(new TowerData(tower_Gae_BP, SkillData(0, SkillType::OneShoot)));
-	towerDataArray.Add(new TowerData(tower_Geol_BP, SkillData(1, SkillType::TraceAndExplosion)));
-	towerDataArray.Add(new TowerData(tower_Yut_BP, SkillData(0, SkillType::OneShoot)));
-	towerDataArray.Add(new TowerData(tower_Mo_BP, SkillData(0, SkillType::OneShoot)));
+	towerDataArray.Add(new TowerData(tower_Do_BP, SkillData(1, SkillType::OneShoot)));
+	towerDataArray.Add(new TowerData(tower_Gae_BP, SkillData(2, SkillType::TraceAndExplosion)));
+	towerDataArray.Add(new TowerData(tower_Geol_BP, SkillData(4, SkillType::TraceAndExplosion)));
+	towerDataArray.Add(new TowerData(tower_Yut_BP, SkillData(6, SkillType::TraceAndExplosion)));
+	towerDataArray.Add(new TowerData(tower_Mo_BP, SkillData(8, SkillType::OneShoot)));
 }
 
 void ATowerManager::ClickFieldEvent(ABaseField* field)
