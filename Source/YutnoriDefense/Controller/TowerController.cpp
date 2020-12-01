@@ -76,7 +76,10 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 					FRotator rotator = FRotator::ZeroRotator;
 
 					SkillCreateData skillCreateData = SkillCreateData(skillData, location, rotator, findActor, attack);
-					skillController->CreateParticle(skillCreateData);
+					if (skillController != nullptr)
+					{
+						skillController->CreateParticle(skillCreateData);
+					}					
 
 					break;
 				}
@@ -97,7 +100,10 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 
 	//스킬 업데이트
-	skillController->Update(DeltaTime);
+	if (skillController != nullptr) 
+	{
+		skillController->Update(DeltaTime);
+	}		
 }
 
 void UTowerController::Init(SkillData data)
@@ -112,13 +118,18 @@ void UTowerController::Init(SkillData data)
 
 void UTowerController::Attack(UEnemyController* enemy)
 {
-	if (enemy != nullptr)
+	if (enemy != nullptr) 
+	{
 		enemy->Damage(attack);
+	}		
 }
 
 void UTowerController::AttackStart()
 {
-	skillController->AttackStartEvent();
+	if (skillController != nullptr) 
+	{
+		skillController->AttackStartEvent();
+	}	
 }
 
 void UTowerController::AttackEnd()
@@ -128,5 +139,8 @@ void UTowerController::AttackEnd()
 	//타겟 초기화
 	target = nullptr;
 
-	skillController->AttackEndEvent();
+	if (skillController != nullptr) 
+	{
+		skillController->AttackEndEvent();
+	}	
 }
