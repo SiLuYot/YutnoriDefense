@@ -71,6 +71,21 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TSubclassOf<class AActor> explosionParticle;
 
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> mixedBallParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> mixedExplosionParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> vortexParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> lightingVortexParticle;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<class AActor> fireVortexParticle;
+
 	UWorld* world;
 	TArray<TSubclassOf<class AActor>> particleArray;
 	TArray<int> removeArray;
