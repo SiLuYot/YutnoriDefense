@@ -70,7 +70,7 @@ SkillContoller::SkillContoller(UWorld* uWorld)
 	particleArray.Add(NULL);					//0
 	particleArray.Add(iceBlitzParticle);		//1
 	particleArray.Add(fireBallParticle);		//2
-	particleArray.Add(explosionParticle);		
+	particleArray.Add(explosionParticle);
 	particleArray.Add(iceBallParticle);			//4
 	particleArray.Add(iceBallExplosionParticle);
 	particleArray.Add(mixedBallParticle);		//6
@@ -103,7 +103,7 @@ void SkillContoller::Update(float DeltaTime)
 {
 	for (int i = 0; i < skillActorArray.Num(); i++)
 	{
-		auto skill = skillActorArray[i];		
+		auto skill = skillActorArray[i];
 
 		switch (skill.createData.data.type)
 		{
@@ -139,13 +139,13 @@ void SkillContoller::Update(float DeltaTime)
 				if (particleArray[explosionIndex] != nullptr)
 				{
 					world->SpawnActor<AActor>(particleArray[explosionIndex], location, rotation);
-				}				
+				}
 			}
 			break;
 		}
 	}
 
-	if (removeArray.Num() > 0) 
+	if (removeArray.Num() > 0)
 	{
 		for (int i = 0; i < removeArray.Num(); i++)
 		{
@@ -153,7 +153,7 @@ void SkillContoller::Update(float DeltaTime)
 		}
 		removeArray.Reset();
 	}
-	
+
 }
 
 void SkillContoller::Attack(AActor* targetActor, float attack)
@@ -166,7 +166,7 @@ void SkillContoller::Attack(AActor* targetActor, float attack)
 
 
 void SkillContoller::AttackStartEvent()
-{	
+{
 	for (int i = 0; i < skillActorArray.Num(); i++)
 	{
 		auto skill = skillActorArray[i];
@@ -184,7 +184,7 @@ void SkillContoller::AttackStartEvent()
 }
 
 void SkillContoller::AttackEndEvent()
-{	
+{
 	for (int i = 0; i < skillActorArray.Num(); i++)
 	{
 		auto skill = skillActorArray[i];

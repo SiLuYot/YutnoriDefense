@@ -25,10 +25,19 @@ public:
 	AFieldManager();
 
 	UPROPERTY(EditAnywhere)
+	int stage;
+
+	UPROPERTY(EditAnywhere)
 	float enemySpawnTimer;
 
 	UPROPERTY(EditAnywhere)
+	float waveRestTimer;
+
+	UPROPERTY(EditAnywhere)
 	float enemySpawnTime;
+
+	UPROPERTY(EditAnywhere)
+	float waveRestTime;
 
 	UPROPERTY(EditAnywhere)
 	AEnemyCreateField* enemyCreateField;
@@ -60,7 +69,7 @@ public:
 	TQueue<UClass*> spawnEnemyQueue;
 	
 	TArray<UEnemyController*> fieldEnemyArray;
-	TArray<UEnemyController*> fieldEnemyRemoveArray;
+	TArray<UEnemyController*> fieldEnemyRemoveArray;	
 
 protected:
 	// Called when the game starts or when spawned
@@ -71,4 +80,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void EnemyCreateStart(UClass* uClass);
+
+	void Wave1Start();
+	void Wave2Start();
+	void Wave3Start();
+	void Wave4Start();
 };
