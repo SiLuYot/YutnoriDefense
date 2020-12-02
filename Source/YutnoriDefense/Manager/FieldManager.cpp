@@ -11,9 +11,6 @@ AFieldManager::AFieldManager()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	enemySpawnTimer = 0;
-	enemySpawnTime = 1.5f;
-
 	static ConstructorHelpers::FObjectFinder<UBlueprint> enemyPawn(TEXT("Blueprint'/Game/Blueprints/Character/Enemy/Enemy_Pawn_BP.Enemy_Pawn_BP'"));
 	if (enemyPawn.Object)
 	{
@@ -49,13 +46,57 @@ AFieldManager::AFieldManager()
 	{
 		enemyKing_BP = (UClass*)enemyKing.Object->GeneratedClass;
 	}
-	
-	spawnEnemyQueue.Enqueue(enemyPawn_BP);
-	spawnEnemyQueue.Enqueue(enemyRook_BP);
-	spawnEnemyQueue.Enqueue(enemyKnight_BP);
-	spawnEnemyQueue.Enqueue(enemyBishop_BP);
-	spawnEnemyQueue.Enqueue(enemyQueen_BP);
-	spawnEnemyQueue.Enqueue(enemyKing_BP);
+
+	stage = 0;
+	enemySpawnTimer = 0;
+	waveRestTimer = 10;
+	enemySpawnTime = 1.0f;
+	waveRestTime = 10.0f;
+}
+
+void AFieldManager::Wave1Start()
+{
+	for (int i = 0; i < 45; i++)
+	{
+		spawnEnemyQueue.Enqueue(enemyPawn_BP);
+	}	
+}
+
+void AFieldManager::Wave2Start()
+{
+	for (int i = 0; i < 15; i++)
+	{
+		spawnEnemyQueue.Enqueue(enemyPawn_BP);
+		spawnEnemyQueue.Enqueue(enemyBishop_BP);
+		spawnEnemyQueue.Enqueue(enemyRook_BP);
+	}
+}
+
+void AFieldManager::Wave3Start()
+{
+	for (int i = 0; i < 9; i++)
+	{
+		spawnEnemyQueue.Enqueue(enemyPawn_BP);
+		spawnEnemyQueue.Enqueue(enemyBishop_BP);
+		spawnEnemyQueue.Enqueue(enemyRook_BP);
+		spawnEnemyQueue.Enqueue(enemyKnight_BP);
+		spawnEnemyQueue.Enqueue(enemyQueen_BP);
+	}
+}
+
+void AFieldManager::Wave4Start()
+{	
+	for (int i = 0; i < 9; i++)
+	{
+		spawnEnemyQueue.Enqueue(enemyPawn_BP);
+		spawnEnemyQueue.Enqueue(enemyBishop_BP);
+		spawnEnemyQueue.Enqueue(enemyRook_BP);
+		spawnEnemyQueue.Enqueue(enemyKnight_BP);
+		spawnEnemyQueue.Enqueue(enemyQueen_BP);
+
+		if (i == 0)
+			spawnEnemyQueue.Enqueue(enemyKing_BP);
+	}
 }
 
 void AFieldManager::EnemyCreateStart(UClass* uClass)
@@ -88,7 +129,7 @@ void AFieldManager::EnemyCreateStart(UClass* uClass)
 // Called when the game starts or when spawned
 void AFieldManager::BeginPlay()
 {
-	Super::BeginPlay();
+	Super::BeginPlay();	
 }
 
 // Called every frame
@@ -96,21 +137,54 @@ void AFieldManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	enemySpawnTimer += DeltaTime;
-
-	if (enemySpawnTimer > enemySpawnTime)
+	if (spawnEnemyQueue.IsEmpty() && fieldEnemyArray.Num() <= 0)
 	{
-		enemySpawnTimer = 0;
-
-		if (!spawnEnemyQueue.IsEmpty())
+		waveRestTimer += DeltaTime;
+		if (waveRestTimer > waveRestTime)
 		{
-			UClass* uclass = nullptr;
-			spawnEnemyQueue.Dequeue(uclass);
-			EnemyCreateStart(uclass);
+			//타이머 초기화
+			waveRestTimer = 0;
+			//다음 스테이지
+			stage += 1;
+
+			if (stage == 1) 
+			{
+				Wave1Start();
+			}
+			else if (stage == 2)
+			{
+				Wave2Start();
+			}
+			else if (stage == 3)
+			{
+				Wave3Start();
+			}
+			else if (stage == 4)
+			{
+				Wave4Start();
+			}
+			else 
+			{
+				//클리어
+			}
+		}
+	}
+	else 
+	{
+		enemySpawnTimer += DeltaTime;
+		if (enemySpawnTimer > enemySpawnTime)
+		{
+			enemySpawnTimer = 0;
+
+			if (!spawnEnemyQueue.IsEmpty())
+			{
+				UClass* uclass = nullptr;
+				spawnEnemyQueue.Dequeue(uclass);
+				EnemyCreateStart(uclass);
+			}
 		}
 	}
 
-	
 	for (int i = 0; i < fieldEnemyArray.Num(); i++)
 	{
 		if (fieldEnemyArray[i] != NULL)
