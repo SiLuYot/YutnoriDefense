@@ -64,6 +64,13 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 					//대상 갱신
 					target = findActor->FindComponentByClass<UEnemyController>();
 
+					if (target->GetHP() <= 0)
+					{
+						//이미 죽은 대상
+						target = nullptr;
+						break;
+					}
+
 					//애니매이션 플레이 시작
 					animRoot->Montage_Play(attackMontage);
 
@@ -90,7 +97,10 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 
 	//찾은 적이 있을때
-	if (target != nullptr && target->GetOwner() != nullptr)
+	if (target != NULL &&
+		target->IsValidLowLevel() &&
+		target->GetOwner() != NULL &&
+		target->GetOwner()->IsValidLowLevel())
 	{
 		//타워가 적을 바라보게 회전
 		auto curPos = GetOwner()->GetActorLocation();
@@ -102,10 +112,10 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 
 	//스킬 업데이트
-	if (skillController != nullptr) 
+	if (skillController != nullptr)
 	{
 		skillController->Update(DeltaTime);
-	}		
+	}
 }
 
 void UTowerController::Init(SkillData data)
@@ -117,21 +127,19 @@ void UTowerController::Init(SkillData data)
 
 void UTowerController::AttackStart()
 {
-	if (skillController != nullptr) 
+	if (skillController != nullptr)
 	{
 		skillController->AttackStartEvent();
-	}	
+	}
 }
 
 void UTowerController::AttackEnd()
 {
-	//타이머 초기화
-	//timer = 0;
 	//타겟 초기화
 	target = nullptr;
 
-	if (skillController != nullptr) 
+	if (skillController != nullptr)
 	{
 		skillController->AttackEndEvent();
-	}	
+	}
 }

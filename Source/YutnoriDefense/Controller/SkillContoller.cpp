@@ -158,10 +158,16 @@ void SkillContoller::Update(float DeltaTime)
 
 void SkillContoller::Attack(AActor* targetActor, float attack)
 {
-	auto targetObj = targetActor->FindComponentByClass<UEnemyController>();
+	if (targetActor != NULL &&
+		targetActor->IsValidLowLevel() && 
+		targetActor->GetOwner() != NULL &&
+		targetActor->GetOwner()->IsValidLowLevel())
+	{
+		auto targetObj = targetActor->FindComponentByClass<UEnemyController>();
 
-	if (targetObj != nullptr)
-		targetObj->Damage(attack);
+		if (targetObj != nullptr)
+			targetObj->Damage(attack);
+	}	
 }
 
 
