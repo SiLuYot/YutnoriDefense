@@ -36,14 +36,7 @@ public:
 	// Sets default values for this component's properties
 	UTowerController();
 
-	UPROPERTY(VisibleAnywhere)
-	float attack;
-
-	UPROPERTY(VisibleAnywhere)
-	float attackSpeed;
-
-	UPROPERTY(VisibleAnywhere)
-	float attackDistance;
+	const float ATTACK_DISTANCE = 200.0f;
 
 	UPROPERTY(VisibleAnywhere)
 	float timer;
@@ -71,8 +64,6 @@ public:
 	FTimerHandle CountdownTimerHandle;
 
 	void Init(SkillData skillData);
-	
-	void Attack(UEnemyController* enemy);
 
 	UFUNCTION(BlueprintCallable)
 	void AttackStart();

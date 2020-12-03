@@ -39,12 +39,47 @@ ATowerManager::ATowerManager()
 		tower_Mo_BP = (UClass*)moTower.Object->GeneratedClass;
 	}
 
-	clickCount = 0;
-	towerDataArray.Add(new TowerData(tower_Do_BP, SkillData(1, SkillType::OneShoot)));
-	towerDataArray.Add(new TowerData(tower_Gae_BP, SkillData(2, SkillType::TraceAndExplosion)));
-	towerDataArray.Add(new TowerData(tower_Geol_BP, SkillData(4, SkillType::TraceAndExplosion)));
-	towerDataArray.Add(new TowerData(tower_Yut_BP, SkillData(6, SkillType::TraceAndExplosion)));
-	towerDataArray.Add(new TowerData(tower_Mo_BP, SkillData(8, SkillType::OneShoot)));
+	//이펙트 없는 기본 공격
+	auto skillData1 = SkillData(0, SkillType::OneShoot, 5, 1, 1);
+	auto skillData2 = SkillData(0, SkillType::OneShoot, 6, 1, 1);
+	auto skillData3 = SkillData(0, SkillType::OneShoot, 7, 1, 1);
+	//얼음 공격
+	auto skillData4 = SkillData(4, SkillType::TraceAndExplosion, 6, 0.5f, 2);
+	auto skillData5 = SkillData(4, SkillType::TraceAndExplosion, 8, 0.5f, 2);
+	auto skillData6 = SkillData(4, SkillType::TraceAndExplosion, 10, 0.5f, 2);
+	//전기 공격
+	auto skillData7 = SkillData(1, SkillType::OneShoot, 35, 1, 2);
+	auto skillData8 = SkillData(1, SkillType::OneShoot, 55, 1, 2.5f);
+	auto skillData9 = SkillData(1, SkillType::OneShoot, 75, 1, 3);
+	//불, 믹스 공격
+	auto skillData10 = SkillData(2, SkillType::TraceAndExplosion, 40, 1, 2);
+	auto skillData11 = SkillData(2, SkillType::TraceAndExplosion, 70, 1, 2.5f);
+	auto skillData12 = SkillData(6, SkillType::TraceAndExplosion, 100, 1, 3);
+	//회오리 공격
+	auto skillData13 = SkillData(10, SkillType::OneShoot, 55, 1, 2);
+	auto skillData14 = SkillData(10, SkillType::OneShoot, 85, 1, 2.5f);
+	auto skillData15 = SkillData(10, SkillType::OneShoot, 125, 1, 3);
+
+	//도 타워 1강 2강 3강
+	towerDataArray.Add(new TowerData(tower_Do_BP, skillData1));
+	towerDataArray.Add(new TowerData(tower_Do_BP, skillData2));
+	towerDataArray.Add(new TowerData(tower_Do_BP, skillData3));
+	//개 타워 1강 2강 3강
+	towerDataArray.Add(new TowerData(tower_Gae_BP, skillData4));
+	towerDataArray.Add(new TowerData(tower_Gae_BP, skillData5));
+	towerDataArray.Add(new TowerData(tower_Gae_BP, skillData6));
+	//걸 타워 1강 2강 3강
+	towerDataArray.Add(new TowerData(tower_Geol_BP, skillData7));
+	towerDataArray.Add(new TowerData(tower_Geol_BP, skillData8));
+	towerDataArray.Add(new TowerData(tower_Geol_BP, skillData9));
+	//웇 타워 1강 2강 3강
+	towerDataArray.Add(new TowerData(tower_Yut_BP, skillData10));
+	towerDataArray.Add(new TowerData(tower_Yut_BP, skillData11));
+	towerDataArray.Add(new TowerData(tower_Yut_BP, skillData12));
+	//모 타워 1강 2강 3강
+	towerDataArray.Add(new TowerData(tower_Mo_BP, skillData13));
+	towerDataArray.Add(new TowerData(tower_Mo_BP, skillData14));
+	towerDataArray.Add(new TowerData(tower_Mo_BP, skillData15));
 }
 
 void ATowerManager::ClickFieldEvent(ABaseField* field)
@@ -64,11 +99,9 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 			SpawnParams.Owner = this;
 			SpawnLocation = field->GetActorLocation();
 			
-			auto findData = towerDataArray[clickCount];
-
-			clickCount += 1;
-			if (clickCount >= towerDataArray.Num())
-				clickCount = 0;
+			//타워 데이터 임시로 랜덤 데이터 가져옴
+			auto rand = FMath::RandRange(0, towerDataArray.Num() - 1);
+			auto findData = towerDataArray[rand];
 
 			auto newActor = world->SpawnActor<AActor>(findData->towerBP, SpawnLocation, rotator, SpawnParams);
 			auto newActorControll = newActor->FindComponentByClass<UTowerController>();

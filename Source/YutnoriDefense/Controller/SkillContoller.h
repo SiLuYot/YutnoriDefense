@@ -19,11 +19,18 @@ struct SkillData
 	int id;
 	SkillType type;
 
+	float attack;
+	float attackSpeed;
+	float range;
+
 	SkillData() {}
-	SkillData(int id, SkillType type)
+	SkillData(int id, SkillType type, float attack, float attackSpeed, float range)
 	{
 		this->id = id;
 		this->type = type;
+		this->attack = attack;
+		this->attackSpeed = attackSpeed;
+		this->range = range;
 	}
 };
 
@@ -33,16 +40,14 @@ struct SkillCreateData
 	FRotator createRotate;
 	AActor* targetActor;
 	SkillData data;
-	float attackValue;
 
 	SkillCreateData() {}
-	SkillCreateData(SkillData data, FVector createPos, FRotator createRotate, AActor* targetActor, float attackValue)
+	SkillCreateData(SkillData data, FVector createPos, FRotator createRotate, AActor* targetActor)
 	{
 		this->data = data;
 		this->createPos = createPos;
 		this->createRotate = createRotate;
 		this->targetActor = targetActor;
-		this->attackValue = attackValue;
 	}
 };
 

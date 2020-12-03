@@ -130,7 +130,7 @@ void SkillContoller::Update(float DeltaTime)
 				auto location = skill.actor->GetActorLocation();
 				auto rotation = skill.actor->GetActorRotation();
 
-				Attack(skill.createData.targetActor, skill.createData.attackValue);
+				Attack(skill.createData.targetActor, skill.createData.data.attack);
 				skill.actor->Destroy();
 				skill.actor = nullptr;
 				removeArray.Add(i);
@@ -174,7 +174,7 @@ void SkillContoller::AttackStartEvent()
 		switch (skill.createData.data.type)
 		{
 		case SkillType::OneShoot:
-			Attack(skill.createData.targetActor, skill.createData.attackValue);
+			Attack(skill.createData.targetActor, skill.createData.data.attack);
 			break;
 		case SkillType::TraceAndExplosion:
 			//¾øÀ½

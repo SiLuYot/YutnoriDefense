@@ -38,9 +38,12 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	timer += DeltaTime;
 
-	//공격 대상이 없을때
-	if (target == nullptr)
+	//공격 가능한 시간이 됐을때
+	if (timer > skillData.attackSpeed)
 	{
+		//타이머 초기화
+		timer = 0;
+
 		//월드의 모든 액터 검색
 		for (TActorIterator<AActor> It(GetWorld()); It; ++It)
 		{
@@ -56,7 +59,7 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				auto distance = GetOwner()->GetDistanceTo(findActor);
 
 				//범위 안에 있다면
-				if (distance <= attackDistance)
+				if (distance <= skillData.range * ATTACK_DISTANCE)
 				{
 					//대상 갱신
 					target = findActor->FindComponentByClass<UEnemyController>();
@@ -75,19 +78,18 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 					FRotator rotator = FRotator::ZeroRotator;
 
-					SkillCreateData skillCreateData = SkillCreateData(skillData, location, rotator, findActor, attack);
+					SkillCreateData skillCreateData = SkillCreateData(skillData, location, rotator, findActor);
 					if (skillController != nullptr)
 					{
 						skillController->CreateParticle(skillCreateData);
-					}					
-
+					}
 					break;
 				}
 			}
 		}
 	}
 
-	//범위 안 적이 있을때
+	//찾은 적이 있을때
 	if (target != nullptr)
 	{
 		//타워가 적을 바라보게 회전
@@ -108,20 +110,9 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UTowerController::Init(SkillData data)
 {
-	this->attack = 1.0f;
-	this->attackSpeed = 1.0f;
-	this->attackDistance = 200.0f;
 	this->timer = 0;
 	this->skillController = new SkillContoller(GetWorld());
 	this->skillData = data;
-}
-
-void UTowerController::Attack(UEnemyController* enemy)
-{
-	if (enemy != nullptr) 
-	{
-		enemy->Damage(attack);
-	}		
 }
 
 void UTowerController::AttackStart()
@@ -135,7 +126,7 @@ void UTowerController::AttackStart()
 void UTowerController::AttackEnd()
 {
 	//타이머 초기화
-	timer = 0;
+	//timer = 0;
 	//타겟 초기화
 	target = nullptr;
 
