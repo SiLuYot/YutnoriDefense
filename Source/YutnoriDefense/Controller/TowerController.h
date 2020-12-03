@@ -36,7 +36,7 @@ public:
 	// Sets default values for this component's properties
 	UTowerController();
 
-	const float ATTACK_DISTANCE = 150.0f;
+	const float ATTACK_DISTANCE = 130.0f;
 
 	UPROPERTY(VisibleAnywhere)
 	float timer;
