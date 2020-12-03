@@ -90,7 +90,7 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 
 	//찾은 적이 있을때
-	if (target != nullptr)
+	if (target != nullptr && target->GetOwner() != nullptr)
 	{
 		//타워가 적을 바라보게 회전
 		auto curPos = GetOwner()->GetActorLocation();
@@ -110,7 +110,7 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 void UTowerController::Init(SkillData data)
 {
-	this->timer = 0;
+	this->timer = data.attackSpeed;
 	this->skillController = new SkillContoller(GetWorld());
 	this->skillData = data;
 }

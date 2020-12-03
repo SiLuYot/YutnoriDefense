@@ -40,25 +40,25 @@ ATowerManager::ATowerManager()
 	}
 
 	//이펙트 없는 기본 공격
-	auto skillData1 = SkillData(0, SkillType::OneShoot, 5, 1, 1);
-	auto skillData2 = SkillData(0, SkillType::OneShoot, 6, 1, 1);
-	auto skillData3 = SkillData(0, SkillType::OneShoot, 7, 1, 1);
+	auto skillData1 = SkillData(0, SkillType::OneShoot, 5.0f, 1.0f, 1.0f);
+	auto skillData2 = SkillData(0, SkillType::OneShoot, 6.0f, 1.0f, 1.0f);
+	auto skillData3 = SkillData(0, SkillType::OneShoot, 7.0f, 1.0f, 1);
 	//얼음 공격
-	auto skillData4 = SkillData(4, SkillType::TraceAndExplosion, 6, 0.5f, 2);
-	auto skillData5 = SkillData(4, SkillType::TraceAndExplosion, 8, 0.5f, 2);
-	auto skillData6 = SkillData(4, SkillType::TraceAndExplosion, 10, 0.5f, 2);
+	auto skillData4 = SkillData(4, SkillType::TraceAndExplosion, 6.0f, 0.5f, 2.0f);
+	auto skillData5 = SkillData(4, SkillType::TraceAndExplosion, 8.0f, 0.5f, 2.0f);
+	auto skillData6 = SkillData(4, SkillType::TraceAndExplosion, 10.0f, 0.5f, 2.0f);
 	//전기 공격
-	auto skillData7 = SkillData(1, SkillType::OneShoot, 35, 1, 2);
-	auto skillData8 = SkillData(1, SkillType::OneShoot, 55, 1, 2.5f);
-	auto skillData9 = SkillData(1, SkillType::OneShoot, 75, 1, 3);
+	auto skillData7 = SkillData(1, SkillType::OneShoot, 35.0f, 1.0f, 2.0f);
+	auto skillData8 = SkillData(1, SkillType::OneShoot, 55.0f, 1.0f, 2.5f);
+	auto skillData9 = SkillData(1, SkillType::OneShoot, 75.0f, 1.0f, 3.0f);
 	//불, 믹스 공격
-	auto skillData10 = SkillData(2, SkillType::TraceAndExplosion, 40, 1, 2);
-	auto skillData11 = SkillData(2, SkillType::TraceAndExplosion, 70, 1, 2.5f);
-	auto skillData12 = SkillData(6, SkillType::TraceAndExplosion, 100, 1, 3);
+	auto skillData10 = SkillData(2, SkillType::TraceAndExplosion, 40.0f, 1.0f, 2.0f);
+	auto skillData11 = SkillData(2, SkillType::TraceAndExplosion, 70.0f, 1.0f, 2.5f);
+	auto skillData12 = SkillData(6, SkillType::TraceAndExplosion, 100.0f, 1.0f, 3.0f);
 	//회오리 공격
-	auto skillData13 = SkillData(10, SkillType::OneShoot, 55, 1, 2);
-	auto skillData14 = SkillData(10, SkillType::OneShoot, 85, 1, 2.5f);
-	auto skillData15 = SkillData(10, SkillType::OneShoot, 125, 1, 3);
+	auto skillData13 = SkillData(10, SkillType::OneShoot, 55.0f, 1.0f, 2.0f);
+	auto skillData14 = SkillData(10, SkillType::OneShoot, 85.0f, 1.0f, 2.5f);
+	auto skillData15 = SkillData(10, SkillType::OneShoot, 125.0f, 1.0f, 3.0f);
 
 	//도 타워 1강 2강 3강
 	towerDataArray.Add(new TowerData(tower_Do_BP, skillData1));

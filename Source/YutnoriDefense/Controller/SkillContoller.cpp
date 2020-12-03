@@ -88,15 +88,12 @@ SkillContoller::~SkillContoller()
 void SkillContoller::CreateParticle(SkillCreateData skillCreateData)
 {
 	int id = skillCreateData.data.id;
-	//0 이면 이펙트 없음
-	if (id != 0)
-	{
-		auto particle = particleArray[id];
-		auto newActor = world->SpawnActor<AActor>(particle, skillCreateData.createPos, skillCreateData.createRotate);
 
-		auto newSkillActor = SkillActor(skillCreateData, newActor);
-		skillActorArray.Add(newSkillActor);
-	}
+	auto particle = particleArray[id];
+	auto newActor = world->SpawnActor<AActor>(particle, skillCreateData.createPos, skillCreateData.createRotate);
+
+	auto newSkillActor = SkillActor(skillCreateData, newActor);
+	skillActorArray.Add(newSkillActor);
 }
 
 void SkillContoller::Update(float DeltaTime)
@@ -111,34 +108,37 @@ void SkillContoller::Update(float DeltaTime)
 			//없음
 			break;
 		case SkillType::TraceAndExplosion:
-			auto curSkillPos = skill.actor->GetActorLocation();
-			auto targetSkillPos = skill.createData.targetActor->GetActorLocation() + FVector(0, 0, 70);
-
-			auto diff = targetSkillPos - curSkillPos;
-
-			if (diff.Size() > 3.0f)
+			if (skill.actor != nullptr)
 			{
-				diff.Normalize();
+				auto curSkillPos = skill.actor->GetActorLocation();
+				auto targetSkillPos = skill.createData.targetActor->GetActorLocation() + FVector(0, 0, 70);
 
-				auto newPos = diff * 500.0f;
-				auto nextPos = curSkillPos + newPos * DeltaTime;
+				auto diff = targetSkillPos - curSkillPos;
 
-				skill.actor->SetActorLocation(nextPos);
-			}
-			else
-			{
-				auto location = skill.actor->GetActorLocation();
-				auto rotation = skill.actor->GetActorRotation();
-
-				Attack(skill.createData.targetActor, skill.createData.data.attack);
-				skill.actor->Destroy();
-				skill.actor = nullptr;
-				removeArray.Add(i);
-
-				int explosionIndex = skill.createData.data.id + 1;
-				if (particleArray[explosionIndex] != nullptr)
+				if (diff.Size() > 3.0f)
 				{
-					world->SpawnActor<AActor>(particleArray[explosionIndex], location, rotation);
+					diff.Normalize();
+
+					auto newPos = diff * 500.0f;
+					auto nextPos = curSkillPos + newPos * DeltaTime;
+
+					skill.actor->SetActorLocation(nextPos);
+				}
+				else
+				{
+					auto location = skill.actor->GetActorLocation();
+					auto rotation = skill.actor->GetActorRotation();
+
+					Attack(skill.createData.targetActor, skill.createData.data.attack);
+					skill.actor->Destroy();
+					skill.actor = nullptr;
+					removeArray.Add(i);
+
+					int explosionIndex = skill.createData.data.id + 1;
+					if (particleArray[explosionIndex] != nullptr)
+					{
+						world->SpawnActor<AActor>(particleArray[explosionIndex], location, rotation);
+					}
 				}
 			}
 			break;
@@ -192,8 +192,11 @@ void SkillContoller::AttackEndEvent()
 		switch (skill.createData.data.type)
 		{
 		case SkillType::OneShoot:
-			skill.actor->Destroy();
-			skill.actor = nullptr;
+			if (skill.actor != nullptr)
+			{
+				skill.actor->Destroy();
+				skill.actor = nullptr;
+			}			
 			removeArray.Add(i);
 			break;
 		case SkillType::TraceAndExplosion:
