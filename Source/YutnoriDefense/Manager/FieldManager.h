@@ -27,6 +27,12 @@ public:
 	UPROPERTY(EditAnywhere)
 	int stage;
 
+	UPROPERTY(BlueprintReadWrite)
+	int deathCount;
+
+	UPROPERTY(BlueprintReadWrite)
+	int yut;
+
 	UPROPERTY(EditAnywhere)
 	float enemySpawnTimer;
 

@@ -52,6 +52,8 @@ AFieldManager::AFieldManager()
 	waveRestTimer = 10;
 	enemySpawnTime = 1.0f;
 	waveRestTime = 10.0f;
+	deathCount = 0;
+	yut = 0;
 }
 
 void AFieldManager::Wave1Start()
@@ -202,17 +204,23 @@ void AFieldManager::Tick(float DeltaTime)
 					fieldEnemyArray[i]->SetNextPos(lifeField, -1);
 				}
 			}
-
+			
 			if (fieldEnemyArray[i]->GetHP() <= 0)
 			{
+				deathCount++;
+				if (deathCount >= 10)
+				{
+					deathCount = 0;
+					yut++;
+				}
 				fieldEnemyRemoveArray.Add(fieldEnemyArray[i]);
-				
 			}
 		}
 	}
 
 	if (fieldEnemyRemoveArray.Num() > 0)
 	{
+
 		for (int i = 0; i < fieldEnemyRemoveArray.Num(); i++)
 		{
 			fieldEnemyArray.Remove(fieldEnemyRemoveArray[i]);
