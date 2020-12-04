@@ -17,12 +17,16 @@
 class TowerData
 {
 public:
-	TSubclassOf<class AActor> towerBP;
+	int index;
+	int type;
+	TSubclassOf<class AActor> towerBP;	
 	SkillData skillData;
 
-	TowerData(TSubclassOf<class AActor> towerBP, SkillData skillData)
+	TowerData(int index, int type, TSubclassOf<class AActor> towerBP, SkillData skillData)
 	{
-		this->towerBP = towerBP;
+		this->index = index;
+		this->type = type;
+		this->towerBP = towerBP;		
 		this->skillData = skillData;
 	}
 };

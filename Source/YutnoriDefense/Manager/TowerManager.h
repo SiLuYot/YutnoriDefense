@@ -20,21 +20,6 @@ public:
 	// Sets default values for this actor's properties
 	ATowerManager();
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> tower_Do_BP;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> tower_Gae_BP;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> tower_Geol_BP;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> tower_Yut_BP;
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<class AActor> tower_Mo_BP;
-
 	TArray<TowerData*> towerDataArray;
 
 protected:
