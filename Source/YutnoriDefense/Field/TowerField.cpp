@@ -51,6 +51,8 @@ void ATowerField::DestroyTower()
 		installTower->GetOwner() != NULL &&
 		installTower->GetOwner()->IsValidLowLevel())
 	{
+		installTower->skillController->DestroyAll();
+
 		installTower->GetOwner()->Destroy();
 		installTower = NULL;
 		towerData = NULL;

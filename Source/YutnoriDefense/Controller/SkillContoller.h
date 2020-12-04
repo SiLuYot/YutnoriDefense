@@ -110,6 +110,7 @@ public:
 	void Attack(AActor* targetActor, float attack);
 	void AttackStartEvent();
 	void AttackEndEvent();
+	void DestroyAll();
 
 	TArray<SkillActor> skillActorArray;
 };

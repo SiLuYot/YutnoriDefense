@@ -211,3 +211,28 @@ void SkillContoller::AttackEndEvent()
 		}
 	}
 }
+
+void SkillContoller::DestroyAll()
+{
+	for (int i = 0; i < skillActorArray.Num(); i++)
+	{
+		auto skill = skillActorArray[i];
+
+		if (skill.actor != nullptr)
+		{
+			skill.actor->Destroy();
+			skill.actor = nullptr;
+		}
+		removeArray.Add(i);
+	}
+	
+	if (removeArray.Num() > 0)
+	{
+		for (int i = 0; i < removeArray.Num(); i++)
+		{
+			skillActorArray.RemoveAt(removeArray[i]);
+		}
+		removeArray.Reset();
+	}
+	skillActorArray.Reset();
+}
