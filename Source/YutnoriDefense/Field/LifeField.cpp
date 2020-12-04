@@ -16,9 +16,10 @@ void ALifeField::NotifyActorBeginOverlap(AActor* OtherActor)
     if (actorControll != nullptr)
     {
         //OtherActor->Destroy();
-        actorControll->hp = 0;
+        actorControll->GetOwner()->Destroy();
 
         playerHP -= 1;
+        UE_LOG(LogTemp, Log, TEXT("남은 목숨 : %d"), playerHP);
         if (playerHP <= 0)
         {
             //게임 패배

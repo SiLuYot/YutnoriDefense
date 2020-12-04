@@ -19,7 +19,7 @@ class YUTNORIDEFENSE_API ALifeField : public ABaseField
     virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
 
 public:
-    UPROPERTY(VisibleAnywhere)
+    UPROPERTY(BlueprintReadOnly)
     int playerHP;
 
 protected:
