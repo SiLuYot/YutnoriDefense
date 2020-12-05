@@ -6,63 +6,8 @@
 #include "Engine/Classes/GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
+#include "YutnoriDefense/Manager/CustomStruct.h"
 #include "YutnoriDefense/Controller/EnemyController.h"
-
-enum SkillType
-{
-	OneShoot = 0,
-	TraceAndExplosion = 1
-};
-
-struct SkillData
-{
-	int id;
-	SkillType type;
-
-	float attack;
-	float attackSpeed;
-	float range;
-
-	SkillData() {}
-	SkillData(int id, SkillType type, float attack, float attackSpeed, float range)
-	{
-		this->id = id;
-		this->type = type;
-		this->attack = attack;
-		this->attackSpeed = attackSpeed;
-		this->range = range;
-	}
-};
-
-struct SkillCreateData
-{
-	FVector createPos;
-	FRotator createRotate;
-	AActor* targetActor;
-	SkillData data;
-
-	SkillCreateData() {}
-	SkillCreateData(SkillData data, FVector createPos, FRotator createRotate, AActor* targetActor)
-	{
-		this->data = data;
-		this->createPos = createPos;
-		this->createRotate = createRotate;
-		this->targetActor = targetActor;
-	}
-};
-
-struct SkillActor
-{
-	SkillCreateData createData;
-	AActor* actor;
-
-	SkillActor() {}
-	SkillActor(SkillCreateData createData, AActor* actor)
-	{
-		this->createData = createData;
-		this->actor = actor;
-	}
-};
 
 class YUTNORIDEFENSE_API SkillContoller
 {

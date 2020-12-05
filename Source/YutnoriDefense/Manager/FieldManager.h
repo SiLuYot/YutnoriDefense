@@ -24,7 +24,7 @@ public:
 	// Sets default values for this actor's properties
 	AFieldManager();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite)
 	int stage;
 
 	UPROPERTY(BlueprintReadWrite)

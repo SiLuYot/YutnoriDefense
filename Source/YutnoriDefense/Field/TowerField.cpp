@@ -18,7 +18,7 @@ void ATowerField::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ATowerField::InstallTower(TowerData* tower, UTowerController* install)
+void ATowerField::InstallTower(FTowerData tower, UTowerController* install)
 {
 	this->towerData = tower;
 	this->installTower = install;
@@ -41,7 +41,7 @@ bool ATowerField::IsSameType(int type)
 		return false;
 	
 	//설치된 타워와 타입이 같다면
-	return towerData->type == type;
+	return towerData.type == type;
 }
 
 void ATowerField::DestroyTower()
@@ -55,6 +55,6 @@ void ATowerField::DestroyTower()
 
 		installTower->GetOwner()->Destroy();
 		installTower = NULL;
-		towerData = NULL;
+		//towerData = NULL;
 	}
 }

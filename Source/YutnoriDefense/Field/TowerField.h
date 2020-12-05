@@ -16,7 +16,7 @@ class YUTNORIDEFENSE_API ATowerField : public ABaseField
 	GENERATED_BODY()
 	
 public:
-	TowerData* towerData;
+	FTowerData towerData;
 	UTowerController* installTower;	
 	
 	ATowerField();
@@ -24,7 +24,7 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	void InstallTower(TowerData* tower, UTowerController* install);
+	void InstallTower(FTowerData tower, UTowerController* install);
 	bool IsCanInstallType(int type);
 	bool IsSameType(int type);
 	void DestroyTower();

@@ -13,24 +13,6 @@
 #include "YutnoriDefense/Controller/SkillContoller.h"
 #include "TowerController.generated.h"
 
-
-class TowerData
-{
-public:
-	int index;
-	int type;
-	TSubclassOf<class AActor> towerBP;	
-	SkillData skillData;
-
-	TowerData(int index, int type, TSubclassOf<class AActor> towerBP, SkillData skillData)
-	{
-		this->index = index;
-		this->type = type;
-		this->towerBP = towerBP;		
-		this->skillData = skillData;
-	}
-};
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class YUTNORIDEFENSE_API UTowerController : public UActorComponent
 {
@@ -54,7 +36,7 @@ public:
 	UAnimInstance* animRoot;
 	USceneComponent* shootRoot;
 
-	SkillData skillData;
+	FSkillData skillData;
 	SkillContoller* skillController;
 
 protected:
@@ -67,7 +49,7 @@ public:
 
 	FTimerHandle CountdownTimerHandle;
 
-	void Init(SkillData skillData);
+	void Init(FSkillData skillData);
 
 	UFUNCTION(BlueprintCallable)
 	void AttackStart();

@@ -7,6 +7,7 @@
 #include "YutnoriDefense/Field/BaseField.h"
 #include "YutnoriDefense/Field/TowerField.h"
 #include "YutnoriDefense/Controller/TowerController.h"
+#include "YutnoriDefense/Manager/CustomStruct.h"
 #include "CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
 #include "TowerManager.generated.h"
@@ -20,7 +21,8 @@ public:
 	// Sets default values for this actor's properties
 	ATowerManager();
 
-	TArray<TowerData*> towerDataArray;
+	UPROPERTY(BlueprintReadOnly)
+	TArray<FTowerData> towerDataArray;
 
 protected:
 	// Called when the game starts or when spawned
