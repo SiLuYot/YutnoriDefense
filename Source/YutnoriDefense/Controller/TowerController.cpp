@@ -118,7 +118,7 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 }
 
-void UTowerController::Init(SkillData data)
+void UTowerController::Init(FSkillData data)
 {
 	this->timer = data.attackSpeed;
 	this->skillController = new SkillContoller(GetWorld());

@@ -117,46 +117,46 @@ ATowerManager::ATowerManager()
 	}
 
 	//이펙트 없는 기본 공격
-	auto skillData1 = SkillData(0, SkillType::OneShoot, 5.0f, 1.0f, 1.0f);
-	auto skillData2 = SkillData(0, SkillType::OneShoot, 6.0f, 1.0f, 1.0f);
-	auto skillData3 = SkillData(0, SkillType::OneShoot, 7.0f, 1.0f, 1);
+	auto skillData1 = FSkillData(0, SkillType::OneShoot, 5.0f, 1.0f, 1.0f);
+	auto skillData2 = FSkillData(0, SkillType::OneShoot, 6.0f, 1.0f, 1.0f);
+	auto skillData3 = FSkillData(0, SkillType::OneShoot, 7.0f, 1.0f, 1);
 	//얼음 공격
-	auto skillData4 = SkillData(4, SkillType::TraceAndExplosion, 6.0f, 0.5f, 2.0f);
-	auto skillData5 = SkillData(4, SkillType::TraceAndExplosion, 8.0f, 0.5f, 2.0f);
-	auto skillData6 = SkillData(4, SkillType::TraceAndExplosion, 10.0f, 0.5f, 2.0f);
+	auto skillData4 = FSkillData(4, SkillType::TraceAndExplosion, 6.0f, 0.5f, 2.0f);
+	auto skillData5 = FSkillData(4, SkillType::TraceAndExplosion, 8.0f, 0.5f, 2.0f);
+	auto skillData6 = FSkillData(4, SkillType::TraceAndExplosion, 10.0f, 0.5f, 2.0f);
 	//전기 공격
-	auto skillData7 = SkillData(1, SkillType::OneShoot, 35.0f, 1.0f, 2.0f);
-	auto skillData8 = SkillData(1, SkillType::OneShoot, 55.0f, 1.0f, 2.5f);
-	auto skillData9 = SkillData(1, SkillType::OneShoot, 75.0f, 1.0f, 3.0f);
+	auto skillData7 = FSkillData(1, SkillType::OneShoot, 35.0f, 1.0f, 2.0f);
+	auto skillData8 = FSkillData(1, SkillType::OneShoot, 55.0f, 1.0f, 2.5f);
+	auto skillData9 = FSkillData(1, SkillType::OneShoot, 75.0f, 1.0f, 3.0f);
 	//불, 믹스 공격
-	auto skillData10 = SkillData(2, SkillType::TraceAndExplosion, 40.0f, 1.0f, 2.0f);
-	auto skillData11 = SkillData(2, SkillType::TraceAndExplosion, 70.0f, 1.0f, 2.5f);
-	auto skillData12 = SkillData(6, SkillType::TraceAndExplosion, 100.0f, 1.0f, 3.0f);
+	auto skillData10 = FSkillData(2, SkillType::TraceAndExplosion, 40.0f, 1.0f, 2.0f);
+	auto skillData11 = FSkillData(2, SkillType::TraceAndExplosion, 70.0f, 1.0f, 2.5f);
+	auto skillData12 = FSkillData(6, SkillType::TraceAndExplosion, 100.0f, 1.0f, 3.0f);
 	//회오리 공격
-	auto skillData13 = SkillData(10, SkillType::OneShoot, 55.0f, 1.0f, 2.0f);
-	auto skillData14 = SkillData(10, SkillType::OneShoot, 85.0f, 1.0f, 2.5f);
-	auto skillData15 = SkillData(10, SkillType::OneShoot, 125.0f, 1.0f, 3.0f);
+	auto skillData13 = FSkillData(10, SkillType::OneShoot, 55.0f, 1.0f, 2.0f);
+	auto skillData14 = FSkillData(10, SkillType::OneShoot, 85.0f, 1.0f, 2.5f);
+	auto skillData15 = FSkillData(10, SkillType::OneShoot, 125.0f, 1.0f, 3.0f);
 
 	//도 타워 1강 2강 3강
-	towerDataArray.Add(new TowerData(0, 0, tower_Do_BP, skillData1));
-	towerDataArray.Add(new TowerData(1, 0, tower_Do_BP_2, skillData2));
-	towerDataArray.Add(new TowerData(2, 0, tower_Do_BP_3, skillData3));
+	towerDataArray.Add(FTowerData(0, 0, 0, tower_Do_BP, skillData1));
+	towerDataArray.Add(FTowerData(1, 0, 1, tower_Do_BP_2, skillData2));
+	towerDataArray.Add(FTowerData(2, 0, 2, tower_Do_BP_3, skillData3));
 	//개 타워 1강 2강 3강
-	towerDataArray.Add(new TowerData(3, 1, tower_Gae_BP, skillData4));
-	towerDataArray.Add(new TowerData(4, 1, tower_Gae_BP_2, skillData5));
-	towerDataArray.Add(new TowerData(5, 1, tower_Gae_BP_3, skillData6));
+	towerDataArray.Add(FTowerData(3, 1, 0, tower_Gae_BP, skillData4));
+	towerDataArray.Add(FTowerData(4, 1, 1, tower_Gae_BP_2, skillData5));
+	towerDataArray.Add(FTowerData(5, 1, 2, tower_Gae_BP_3, skillData6));
 	//걸 타워 1강 2강 3강
-	towerDataArray.Add(new TowerData(6, 2, tower_Geol_BP, skillData7));
-	towerDataArray.Add(new TowerData(7, 2, tower_Geol_BP_2, skillData8));
-	towerDataArray.Add(new TowerData(8, 2, tower_Geol_BP_3, skillData9));
+	towerDataArray.Add(FTowerData(6, 2, 0, tower_Geol_BP, skillData7));
+	towerDataArray.Add(FTowerData(7, 2, 1, tower_Geol_BP_2, skillData8));
+	towerDataArray.Add(FTowerData(8, 2, 2, tower_Geol_BP_3, skillData9));
 	//웇 타워 1강 2강 3강
-	towerDataArray.Add(new TowerData(9, 3, tower_Yut_BP, skillData10));
-	towerDataArray.Add(new TowerData(10, 3, tower_Yut_BP_2, skillData11));
-	towerDataArray.Add(new TowerData(11, 3, tower_Yut_BP_3, skillData12));
+	towerDataArray.Add(FTowerData(9, 3, 0, tower_Yut_BP, skillData10));
+	towerDataArray.Add(FTowerData(10, 3, 1, tower_Yut_BP_2, skillData11));
+	towerDataArray.Add(FTowerData(11, 3, 2, tower_Yut_BP_3, skillData12));
 	//모 타워 1강 2강 3강
-	towerDataArray.Add(new TowerData(12, 4, tower_Mo_BP, skillData13));
-	towerDataArray.Add(new TowerData(13, 4, tower_Mo_BP_2, skillData14));
-	towerDataArray.Add(new TowerData(14, 4, tower_Mo_BP_3, skillData15));
+	towerDataArray.Add(FTowerData(12, 4, 0, tower_Mo_BP, skillData13));
+	towerDataArray.Add(FTowerData(13, 4, 1, tower_Mo_BP_2, skillData14));
+	towerDataArray.Add(FTowerData(14, 4, 2, tower_Mo_BP_3, skillData15));
 }
 
 void ATowerManager::ClickFieldEvent(ABaseField* field)
@@ -181,21 +181,21 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 			auto findData = towerDataArray[rand];
 
 			//타워가 설치 가능하고
-			if (towerField->IsCanInstallType(findData->type))
+			if (towerField->IsCanInstallType(findData.type))
 			{
 				//이미 설치된 타워와 같은 타입일때
-				if (towerField->IsSameType(findData->type))
+				if (towerField->IsSameType(findData.type))
 				{
-					auto originID = towerField->towerData->index;
-					auto originType = towerField->towerData->type;					
+					auto originID = towerField->towerData.index;
+					auto originType = towerField->towerData.type;					
 										
 					int nextID = originID + 1;
 					//다음 ID가 배열 범위 안에 있을때
 					if (nextID < towerDataArray.Num()) 
 					{
 						auto newData = towerDataArray[nextID];
-						//다음 데이터가 널이 아니고 같은 타입일때
-						if (newData != NULL && newData->type == originType)
+						//다음 데이터가 같은 타입일때
+						if (newData.type == originType)
 						{
 							UE_LOG(LogTemp, Log, TEXT("Upgrade Tower [origin : %d new : %d]"), originID, nextID);
 
@@ -203,9 +203,9 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 							towerField->DestroyTower();
 
 							//타워 생성 후 초기화
-							auto newActor = world->SpawnActor<AActor>(newData->towerBP, SpawnLocation, rotator, SpawnParams);
+							auto newActor = world->SpawnActor<AActor>(newData.towerBP, SpawnLocation, rotator, SpawnParams);
 							auto newActorControll = newActor->FindComponentByClass<UTowerController>();
-							newActorControll->Init(newData->skillData);
+							newActorControll->Init(newData.skillData);
 
 							//타워필드에 생성한 타워 설치
 							towerField->InstallTower(newData, newActorControll);
@@ -215,12 +215,12 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 				//타워 설치가 가능하지만 타입이 다를때 (타워 미설치 상태)
 				else
 				{
-					UE_LOG(LogTemp, Log, TEXT("Create New Tower ID : %d"), findData->index);
+					UE_LOG(LogTemp, Log, TEXT("Create New Tower ID : %d"), findData.index);
 
 					//타워 생성 후 초기화
-					auto newActor = world->SpawnActor<AActor>(findData->towerBP, SpawnLocation, rotator, SpawnParams);
+					auto newActor = world->SpawnActor<AActor>(findData.towerBP, SpawnLocation, rotator, SpawnParams);
 					auto newActorControll = newActor->FindComponentByClass<UTowerController>();
-					newActorControll->Init(findData->skillData);
+					newActorControll->Init(findData.skillData);
 
 					//타워필드에 생성한 타워 설치
 					towerField->InstallTower(findData, newActorControll);
