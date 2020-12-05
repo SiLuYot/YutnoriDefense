@@ -54,6 +54,7 @@ AFieldManager::AFieldManager()
 	waveRestTime = 10.0f;
 	deathCount = 0;
 	yut = 0;
+	isRestTime = false;
 }
 
 void AFieldManager::Wave1Start()
@@ -141,9 +142,11 @@ void AFieldManager::Tick(float DeltaTime)
 
 	if (spawnEnemyQueue.IsEmpty() && fieldEnemyArray.Num() <= 0)
 	{
+		isRestTime = true;
 		waveRestTimer += DeltaTime;
 		if (waveRestTimer > waveRestTime)
 		{
+			isRestTime = false;
 			//타이머 초기화
 			waveRestTimer = 0;
 			//다음 스테이지

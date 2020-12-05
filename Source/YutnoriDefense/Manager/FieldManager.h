@@ -33,6 +33,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int yut;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool isRestTime;
+
 	UPROPERTY(EditAnywhere)
 	float enemySpawnTimer;
 
