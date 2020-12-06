@@ -14,6 +14,38 @@ UTowerController::UTowerController()
 	{
 		attackMontage = attackClass.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>doSound1(TEXT("SoundWave'/Game/Sound/Skill/Unit1_Attack1.Unit1_Attack1'"));
+	if (doSound1.Succeeded())
+	{
+		doSound = doSound1.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>gaeSound1(TEXT("SoundWave'/Game/Sound/Skill/Unit2_Attack.Unit2_Attack'"));
+	if (gaeSound1.Succeeded())
+	{
+		gaeSound = gaeSound1.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>geolSound1(TEXT("SoundWave'/Game/Sound/Skill/Unit3_Attack.Unit3_Attack'"));
+	if (geolSound1.Succeeded())
+	{
+		geolSound = geolSound1.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>yutSound1(TEXT("SoundWave'/Game/Sound/Skill/Unit4_Attack1.Unit4_Attack1'"));
+	if (yutSound1.Succeeded())
+	{
+		yutSound = yutSound1.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundWave>moSound1(TEXT("SoundWave'/Game/Sound/Skill/Unit5_Attack.Unit5_Attack'"));
+	if (moSound1.Succeeded())
+	{
+		moSound = moSound1.Object;
+	}
+
+	audio = CreateDefaultSubobject<UAudioComponent>(TEXT("SOUND"));
 }
 
 
@@ -26,7 +58,7 @@ void UTowerController::BeginPlay()
 	meshRoot = root->GetSkeletalMeshComponent();
 	animRoot = meshRoot->GetAnimInstance();
 	shootRoot = Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(TEXT("shootRoot")));
-
+	
 	GetOwner()->SetActorRotation(FRotator::ZeroRotator);
 	GetOwner()->AddActorLocalRotation(FRotator(0, 90, 0));
 }
@@ -131,6 +163,34 @@ void UTowerController::AttackStart()
 	{
 		skillController->AttackStartEvent();
 	}
+	
+	if (audio->IsValidLowLevelFast())
+		audio->Stop();
+
+	switch (skillData.id)
+	{
+	case 0:
+		audio->SetSound(doSound);
+		break;
+	case 4:
+		audio->SetSound(gaeSound);
+		break;
+	case 1:
+		audio->SetSound(geolSound);
+		break;
+	case 2:
+		audio->SetSound(yutSound);
+		break;	
+	case 6:
+		audio->SetSound(yutSound);
+		break;
+	case 10:
+		audio->SetSound(moSound);
+		break;
+	}
+
+	if (audio->IsValidLowLevelFast())
+		audio->Play();
 }
 
 void UTowerController::AttackEnd()

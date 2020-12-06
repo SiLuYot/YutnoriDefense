@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "YutnoriDefense/Controller/EnemyController.h"
 #include "YutnoriDefense/Controller/SkillContoller.h"
+#include "Components/AudioComponent.h"
 #include "TowerController.generated.h"
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -30,6 +31,21 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UAnimMontage* attackMontage;
 
+	UPROPERTY(VisibleAnywhere)
+	USoundWave* doSound;
+
+	UPROPERTY(VisibleAnywhere)
+	USoundWave* gaeSound;
+
+	UPROPERTY(VisibleAnywhere)
+	USoundWave* geolSound;
+
+	UPROPERTY(VisibleAnywhere)
+	USoundWave* yutSound;
+
+	UPROPERTY(VisibleAnywhere)
+	USoundWave* moSound;
+
 	UEnemyController* target;
 
 	USkeletalMeshComponent* meshRoot;
@@ -38,6 +54,7 @@ public:
 
 	FSkillData skillData;
 	SkillContoller* skillController;
+	UAudioComponent* audio;
 
 protected:
 	// Called when the game starts
