@@ -94,4 +94,10 @@ public:
 	void Wave2Start();
 	void Wave3Start();
 	void Wave4Start();
+
+	UFUNCTION(BlueprintCallable)
+	int GetCurrentEnemyCount();
+
+	UFUNCTION(BlueprintCallable)
+	bool IsLeftSpawnEnemy();
 };

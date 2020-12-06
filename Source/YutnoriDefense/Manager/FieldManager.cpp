@@ -223,7 +223,6 @@ void AFieldManager::Tick(float DeltaTime)
 
 	if (fieldEnemyRemoveArray.Num() > 0)
 	{
-
 		for (int i = 0; i < fieldEnemyRemoveArray.Num(); i++)
 		{
 			fieldEnemyArray.Remove(fieldEnemyRemoveArray[i]);
@@ -234,3 +233,12 @@ void AFieldManager::Tick(float DeltaTime)
 	}
 }
 
+int AFieldManager::GetCurrentEnemyCount()
+{
+	return fieldEnemyArray.Num();
+}
+
+bool AFieldManager::IsLeftSpawnEnemy()
+{
+	return !spawnEnemyQueue.IsEmpty();
+}
