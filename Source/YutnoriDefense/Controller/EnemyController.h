@@ -18,11 +18,14 @@ public:
 	// Sets default values for this component's properties
 	UEnemyController();
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite)
 	float hp;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadWrite)
 	float moveSpeed;
+
+	UPROPERTY(BlueprintReadWrite)
+	float defense;
 
 	UPROPERTY(VisibleAnywhere)
 	int32 moveFieldIndex;

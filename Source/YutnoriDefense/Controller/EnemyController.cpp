@@ -55,6 +55,7 @@ void UEnemyController::Init()
 	this->NextMoveField = nullptr;
 	this->moveFieldIndex = 0;
 	this->isMoveEnd = false;
+	this->defense = 0.0;
 }
 
 void UEnemyController::SetNextPos(ABaseField* field, int32 index)
@@ -66,7 +67,7 @@ void UEnemyController::SetNextPos(ABaseField* field, int32 index)
 
 void UEnemyController::Damage(float attack)
 {
-	hp -= attack;
+	hp -= (attack - defense);
 }
 
 float UEnemyController::GetHP()
