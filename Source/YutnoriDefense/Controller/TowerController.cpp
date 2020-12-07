@@ -157,13 +157,8 @@ void UTowerController::Init(FSkillData data)
 	this->skillData = data;
 }
 
-void UTowerController::AttackStart()
+void UTowerController::EffectStart()
 {
-	if (skillController != nullptr)
-	{
-		skillController->AttackStartEvent();
-	}
-	
 	if (audio->IsValidLowLevelFast())
 		audio->Stop();
 
@@ -180,7 +175,7 @@ void UTowerController::AttackStart()
 		break;
 	case 2:
 		audio->SetSound(yutSound);
-		break;	
+		break;
 	case 6:
 		audio->SetSound(yutSound);
 		break;
@@ -191,6 +186,14 @@ void UTowerController::AttackStart()
 
 	if (audio->IsValidLowLevelFast())
 		audio->Play();
+}
+
+void UTowerController::AttackStart()
+{
+	if (skillController != nullptr)
+	{
+		skillController->AttackStartEvent();
+	}
 }
 
 void UTowerController::AttackEnd()
