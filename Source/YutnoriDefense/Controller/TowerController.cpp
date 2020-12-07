@@ -15,6 +15,12 @@ UTowerController::UTowerController()
 		attackMontage = attackClass.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> doubleAttack(TEXT("AnimMontage'/Game/ModularAnimalKnightsPolyart/Animations/ComboAttack.ComboAttack'"));
+	if (doubleAttack.Succeeded())
+	{
+		doubleAttackMontage = doubleAttack.Object;
+	}
+
 	static ConstructorHelpers::FObjectFinder<USoundWave>doSound1(TEXT("SoundWave'/Game/Sound/Skill/Unit1_Attack1.Unit1_Attack1'"));
 	if (doSound1.Succeeded())
 	{
@@ -104,7 +110,13 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 					}
 
 					//애니매이션 플레이 시작
-					animRoot->Montage_Play(attackMontage);
+					//animRoot->Montage_Play(attackMontage);
+
+					UAnimMontage* montage = NULL;
+					if (skillData.montageType == 0)
+						montage = attackMontage;
+					else if (skillData.montageType == 1)
+						montage = doubleAttackMontage;
 
 					//스킬 이펙트 생성
 					FVector location = FVector::ZeroVector;
@@ -117,7 +129,7 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 					FRotator rotator = FRotator::ZeroRotator;
 
-					SkillCreateData skillCreateData = SkillCreateData(skillData, location, rotator, findActor);
+					SkillCreateData skillCreateData = SkillCreateData(animRoot, montage, skillData, location, rotator, findActor);
 					if (skillController != nullptr)
 					{
 						skillController->CreateParticle(skillCreateData);

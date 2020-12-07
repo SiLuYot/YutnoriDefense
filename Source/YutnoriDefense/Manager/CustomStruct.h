@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Runtime/Engine/Classes/Animation/AnimInstance.h"
 #include "CustomStruct.generated.h"
 
 UCLASS()
@@ -52,27 +53,36 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float range;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int montageType;
+
 	FSkillData() {}
-	FSkillData(int id, SkillType type, float attack, float attackSpeed, float range)
+	FSkillData(int id, SkillType type, float attack, float attackSpeed, float range, int montageType)
 	{
 		this->id = id;
 		this->type = type;
 		this->attack = attack;
 		this->attackSpeed = attackSpeed;
 		this->range = range;
+		this->montageType = montageType;
 	}
 };
 
 struct SkillCreateData
 {
+	UAnimInstance* instance;
+	UAnimMontage* attackMontage;
+
 	FVector createPos;
 	FRotator createRotate;
 	AActor* targetActor;
 	FSkillData data;
 
 	SkillCreateData() {}
-	SkillCreateData(FSkillData data, FVector createPos, FRotator createRotate, AActor* targetActor)
+	SkillCreateData(UAnimInstance* instance, UAnimMontage* attackMontage, FSkillData data, FVector createPos, FRotator createRotate, AActor* targetActor)
 	{
+		this->instance = instance;
+		this->attackMontage = attackMontage;
 		this->data = data;
 		this->createPos = createPos;
 		this->createRotate = createRotate;

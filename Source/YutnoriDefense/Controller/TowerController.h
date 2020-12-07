@@ -32,6 +32,9 @@ public:
 	UAnimMontage* attackMontage;
 
 	UPROPERTY(VisibleAnywhere)
+	UAnimMontage* doubleAttackMontage;
+
+	UPROPERTY(VisibleAnywhere)
 	USoundWave* doSound;
 
 	UPROPERTY(VisibleAnywhere)

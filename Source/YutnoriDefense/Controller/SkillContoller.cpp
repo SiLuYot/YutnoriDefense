@@ -94,6 +94,9 @@ void SkillContoller::CreateParticle(SkillCreateData skillCreateData)
 
 	auto newSkillActor = SkillActor(skillCreateData, newActor);
 	skillActorArray.Add(newSkillActor);
+
+	//애니매이션 플레이 시작
+	skillCreateData.instance->Montage_Play(skillCreateData.attackMontage);
 }
 
 void SkillContoller::Update(float DeltaTime)
