@@ -121,21 +121,21 @@ ATowerManager::ATowerManager()
 	auto skillData2 = FSkillData(0, SkillType::OneShoot, 6.0f, 1.0f, 1.0f, 0, 0, 0, 0, 1);
 	auto skillData3 = FSkillData(0, SkillType::OneShoot, 7.0f, 1.0f, 1.0f, 0, 0, 0, 0, 1);
 	//얼음 공격
-	auto skillData4 = FSkillData(4, SkillType::TraceAndExplosion, 6.0f, 0.5f, 2.0f, 0, 1, 0.2f, 2, 0);
-	auto skillData5 = FSkillData(4, SkillType::TraceAndExplosion, 8.0f, 0.5f, 2.0f, 0, 1, 0.3f, 2.5f, 0);
-	auto skillData6 = FSkillData(4, SkillType::TraceAndExplosion, 10.0f, 0.5f, 2.0f, 2, 2, 0.2f, 2, 0);
+	auto skillData4 = FSkillData(4, SkillType::TraceAndExplosion, 6.0f,  0.5f, 2.0f, 0, 1, 0.2f, 2,    0);
+	auto skillData5 = FSkillData(4, SkillType::TraceAndExplosion, 8.0f,  0.5f, 2.0f, 0, 1, 0.3f, 2.5f, 0);
+	auto skillData6 = FSkillData(4, SkillType::TraceAndExplosion, 10.0f, 0.5f, 2.0f, 0, 1, 0.4f, 3,    0);
 	//전기 공격
-	auto skillData7 = FSkillData(1, SkillType::OneShoot, 35.0f, 1.0f, 2.0f, 2, 2, 0.2f, 2, 0);
+	auto skillData7 = FSkillData(1, SkillType::OneShoot, 35.0f, 1.0f, 2.0f, 2,    2, 0.2f, 2,    0);
 	auto skillData8 = FSkillData(1, SkillType::OneShoot, 55.0f, 1.0f, 2.5f, 2.5f, 2, 0.3f, 2.5f, 0);
-	auto skillData9 = FSkillData(1, SkillType::OneShoot, 75.0f, 1.0f, 3.0f, 3, 2, 0.4f, 3, 0);
+	auto skillData9 = FSkillData(1, SkillType::OneShoot, 75.0f, 1.0f, 3.0f, 3,    2, 0.4f, 3,    0);
 	//불, 믹스 공격
-	auto skillData10 = FSkillData(2, SkillType::TraceAndExplosion, 40.0f, 1.0f, 2.0f, 3, 0, 0, 0, 0);
-	auto skillData11 = FSkillData(2, SkillType::TraceAndExplosion, 70.0f, 1.0f, 2.5f, 3.5f, 0, 0, 0, 0);
-	auto skillData12 = FSkillData(6, SkillType::TraceAndExplosion, 100.0f, 1.0f, 3.0f, 4, 0, 0, 0, 0);
+	auto skillData10 = FSkillData(2, SkillType::TraceAndExplosion, 40.0f,  1.0f, 2.0f, 3,    0, 0, 0, 0);
+	auto skillData11 = FSkillData(2, SkillType::TraceAndExplosion, 70.0f,  1.0f, 2.5f, 3.5f, 0, 0, 0, 0);
+	auto skillData12 = FSkillData(6, SkillType::TraceAndExplosion, 100.0f, 1.0f, 3.0f, 4,    0, 0, 0, 0);
 	//회오리 공격
-	auto skillData13 = FSkillData(8, SkillType::OneShoot, 55.0f, 1.0f, 2.0f, 3, 0, 0, 0, 0);
-	auto skillData14 = FSkillData(9, SkillType::OneShoot, 85.0f, 1.0f, 2.5f, 3.5f, 0, 0, 0, 0);
-	auto skillData15 = FSkillData(10, SkillType::OneShoot, 125.0f, 1.0f, 3.0f, 4, 3, 0.05f, 0, 0);
+	auto skillData13 = FSkillData(8, SkillType::OneShoot, 55.0f,   1.0f, 2.0f, 3,    0, 0,     0, 0);
+	auto skillData14 = FSkillData(9, SkillType::OneShoot, 85.0f,   1.0f, 2.5f, 3.5f, 0, 0,     0, 0);
+	auto skillData15 = FSkillData(10, SkillType::OneShoot, 125.0f, 1.0f, 3.0f, 4,    3, 0.05f, 0, 0);
 
 	//도 타워 1강 2강 3강
 	towerDataArray.Add(FTowerData(0, 0, 0, tower_Do_BP, skillData1));
