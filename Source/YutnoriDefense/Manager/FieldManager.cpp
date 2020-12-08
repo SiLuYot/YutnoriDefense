@@ -227,7 +227,7 @@ void AFieldManager::Tick(float DeltaTime)
 		{
 			fieldEnemyArray.Remove(fieldEnemyRemoveArray[i]);
 			fieldEnemyRemoveArray[i]->GetOwner()->Destroy();
-			fieldEnemyRemoveArray[i] = NULL;
+			//fieldEnemyRemoveArray[i] = NULL;
 		}
 		fieldEnemyRemoveArray.Reset();
 	}

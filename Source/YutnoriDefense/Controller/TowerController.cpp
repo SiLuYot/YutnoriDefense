@@ -97,7 +97,11 @@ void UTowerController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 				auto distance = GetOwner()->GetDistanceTo(findActor);
 
 				//범위 안에 있다면
-				if (distance <= skillData.range * ATTACK_DISTANCE)
+				auto skillRange = skillData.range * ATTACK_DISTANCE;
+				//범위가 너무 작은 경우 조금 넓혀줌
+				skillRange = skillRange <= 130 ? 150 : skillRange;
+
+				if (distance <= skillRange)
 				{
 					//대상 갱신
 					target = findActor->FindComponentByClass<UEnemyController>();
