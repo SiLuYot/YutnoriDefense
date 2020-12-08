@@ -54,16 +54,33 @@ public:
 	float range;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float effectArea;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float effectType;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float effectValue;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float applyEffectTime;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int montageType;
 
 	FSkillData() {}
-	FSkillData(int id, SkillType type, float attack, float attackSpeed, float range, int montageType)
+	FSkillData(int id, SkillType type, float attack, float attackSpeed, float range, float effectArea,
+		float effectType, float effectValue, float applyEffectTime, int montageType)
 	{
 		this->id = id;
 		this->type = type;
 		this->attack = attack;
 		this->attackSpeed = attackSpeed;
 		this->range = range;
+		this->effectArea = effectArea;
+		this->effectType = effectType;
+		this->effectValue = effectValue;
+		this->applyEffectTime = applyEffectTime;
 		this->montageType = montageType;
 	}
 };

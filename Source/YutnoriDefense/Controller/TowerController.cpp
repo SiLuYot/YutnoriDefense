@@ -195,6 +195,8 @@ void UTowerController::EffectStart()
 	case 6:
 		audio->SetSound(yutSound);
 		break;
+	case 8:
+	case 9:
 	case 10:
 		audio->SetSound(moSound);
 		break;
