@@ -7,6 +7,9 @@
 #include "Engine/World.h"
 #include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "YutnoriDefense/Manager/CustomStruct.h"
+#include "Engine/World.h"
+#include "CoreUObject/Public/UObject/UObjectIterator.h"
+#include "Engine/Public/EngineUtils.h"
 #include "YutnoriDefense/Controller/EnemyController.h"
 
 class YUTNORIDEFENSE_API SkillContoller
@@ -45,6 +48,8 @@ public:
 	UWorld* world;
 	TArray<TSubclassOf<class AActor>> particleArray;
 	TArray<int> removeArray;
+
+	const float EFFECT_DISTANCE = 130.0f;
 
 public:
 	SkillContoller(UWorld* uWorld);
