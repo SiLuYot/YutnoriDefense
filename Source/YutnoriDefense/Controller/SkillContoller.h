@@ -52,7 +52,7 @@ public:
 
 	void CreateParticle(SkillCreateData skillData);
 	void Update(float DeltaTime);
-	void Attack(AActor* targetActor, float attack);
+	void Attack(SkillActor skill);
 	void AttackStartEvent();
 	void AttackEndEvent();
 	void DestroyAll();

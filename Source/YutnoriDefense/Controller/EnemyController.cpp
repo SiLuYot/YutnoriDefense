@@ -39,7 +39,7 @@ void UEnemyController::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	{
 		diff.Normalize();
 
-		auto newPos = diff * moveSpeed;
+		auto newPos = diff * GetSpeed();
 		auto nextPos = curPos + newPos * DeltaTime;
 
 		GetOwner()->SetActorLocation(nextPos);
@@ -56,6 +56,7 @@ void UEnemyController::Init()
 	this->moveFieldIndex = 0;
 	this->isMoveEnd = false;
 	this->defense = 0.0;
+	this->speedWeight = 1.0f;
 }
 
 void UEnemyController::SetNextPos(ABaseField* field, int32 index)
@@ -75,8 +76,39 @@ float UEnemyController::GetHP()
 	return hp;
 }
 
+float UEnemyController::GetSpeed()
+{
+	return moveSpeed * speedWeight;
+}
+
 void UEnemyController::SetStat(float _hp, float _moveSpeed)
 {
 	this->hp = _hp;
 	this->moveSpeed = _moveSpeed;
+}
+
+void UEnemyController::SetTimer(float time, FTimerDelegate const& InDelegate)
+{	
+	GetOwner()->GetWorldTimerManager().SetTimer(timer, InDelegate, time, false);
+}
+
+void UEnemyController::ClearTimer()
+{
+	GetOwner()->GetWorldTimerManager().ClearTimer(timer);
+}
+
+void UEnemyController::ResetSpeedWeight()
+{
+	speedWeight = 1.0f;
+}
+
+void UEnemyController::ApplySlowEffect(float time)
+{
+	GetOwner()->GetWorldTimerManager().SetTimer(timer, this, &UEnemyController::EndSlowEffect, time, false);
+}
+
+void UEnemyController::EndSlowEffect()
+{
+	ResetSpeedWeight();
+	ClearTimer();
 }

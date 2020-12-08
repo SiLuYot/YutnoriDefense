@@ -117,8 +117,7 @@ void AFieldManager::EnemyCreateStart(UClass* uClass)
 		SpawnParams.Owner = this;
 		SpawnLocation = enemyCreateField->GetActorLocation();
 
-		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);
-		//auto newActor = world->SpawnActor<AActor>(AEnemy::StaticClass(), SpawnLocation, rotator, SpawnParams);
+		auto newActor = world->SpawnActor<AActor>(uClass, SpawnLocation, rotator, SpawnParams);		
 		newActor->Tags.Add("Enemy");
 
 		auto newActorControll = newActor->FindComponentByClass<UEnemyController>();
@@ -225,9 +224,17 @@ void AFieldManager::Tick(float DeltaTime)
 	{
 		for (int i = 0; i < fieldEnemyRemoveArray.Num(); i++)
 		{
-			fieldEnemyArray.Remove(fieldEnemyRemoveArray[i]);
-			fieldEnemyRemoveArray[i]->GetOwner()->Destroy();
-			//fieldEnemyRemoveArray[i] = NULL;
+			auto targetActor = fieldEnemyRemoveArray[i];
+
+			if (targetActor != NULL &&
+				targetActor->IsValidLowLevel() &&
+				targetActor->GetOwner() != NULL &&
+				targetActor->GetOwner()->IsValidLowLevel())
+			{
+				fieldEnemyArray.Remove(fieldEnemyRemoveArray[i]);
+				fieldEnemyRemoveArray[i]->GetOwner()->Destroy();
+				fieldEnemyRemoveArray[i] = NULL;
+			}
 		}
 		fieldEnemyRemoveArray.Reset();
 	}

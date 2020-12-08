@@ -67,17 +67,17 @@ SkillContoller::SkillContoller(UWorld* uWorld)
 		fireVortexParticle = (UClass*)fireVortex->GeneratedClass;
 	}
 
-	particleArray.Add(NULL);					//0
-	particleArray.Add(iceBlitzParticle);		//1
-	particleArray.Add(fireBallParticle);		//2
+	particleArray.Add(NULL);					//0 도
+	particleArray.Add(iceBlitzParticle);		//1 걸
+	particleArray.Add(fireBallParticle);		//2 윷
 	particleArray.Add(explosionParticle);
-	particleArray.Add(iceBallParticle);			//4
+	particleArray.Add(iceBallParticle);			//4 개
 	particleArray.Add(iceBallExplosionParticle);
-	particleArray.Add(mixedBallParticle);		//6
+	particleArray.Add(mixedBallParticle);		//6 윷
 	particleArray.Add(mixedExplosionParticle);
-	particleArray.Add(vortexParticle);			//8
-	particleArray.Add(lightingVortexParticle);	//9
-	particleArray.Add(fireVortexParticle);		//10
+	particleArray.Add(vortexParticle);			//8 모
+	particleArray.Add(lightingVortexParticle);	//9 모
+	particleArray.Add(fireVortexParticle);		//10 모
 }
 
 SkillContoller::~SkillContoller()
@@ -132,7 +132,7 @@ void SkillContoller::Update(float DeltaTime)
 					auto location = skill.actor->GetActorLocation();
 					auto rotation = skill.actor->GetActorRotation();
 
-					Attack(skill.createData.targetActor, skill.createData.data.attack);
+					Attack(skill);
 					skill.actor->Destroy();
 					skill.actor = nullptr;
 					removeArray.Add(i);
@@ -159,8 +159,11 @@ void SkillContoller::Update(float DeltaTime)
 
 }
 
-void SkillContoller::Attack(AActor* targetActor, float attack)
+void SkillContoller::Attack(SkillActor skill)
 {
+	float attack = skill.createData.data.attack;
+	AActor* targetActor = skill.createData.targetActor;
+
 	if (targetActor != NULL &&
 		targetActor->IsValidLowLevel() && 
 		targetActor->GetOwner() != NULL &&
@@ -168,11 +171,32 @@ void SkillContoller::Attack(AActor* targetActor, float attack)
 	{
 		auto targetObj = targetActor->FindComponentByClass<UEnemyController>();
 
+		//추가 이펙트 없음
+		if (skill.createData.data.effectType == 0)
+		{
+
+		}
+		//단일 슬로우
+		else if (skill.createData.data.effectType == 1)
+		{
+			targetObj->speedWeight = (1.0f - skill.createData.data.effectValue);
+			targetObj->ApplySlowEffect(skill.createData.data.applyEffectTime);
+		}
+		//광역 슬로우
+		else if (skill.createData.data.effectType == 2)
+		{
+
+		}
+		//최대 체력 % 데미지
+		else if (skill.createData.data.effectType == 3)
+		{
+
+		}
+
 		if (targetObj != nullptr)
 			targetObj->Damage(attack);
 	}	
 }
-
 
 void SkillContoller::AttackStartEvent()
 {
@@ -183,7 +207,7 @@ void SkillContoller::AttackStartEvent()
 		switch (skill.createData.data.type)
 		{
 		case SkillType::OneShoot:
-			Attack(skill.createData.targetActor, skill.createData.data.attack);
+			Attack(skill);
 			break;
 		case SkillType::TraceAndExplosion:
 			//없음

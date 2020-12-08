@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "YutnoriDefense/Field/EnemyMoveField.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 #include "EnemyController.generated.h"
 
 
@@ -25,6 +26,9 @@ public:
 	float moveSpeed;
 
 	UPROPERTY(BlueprintReadWrite)
+	float speedWeight;
+
+	UPROPERTY(BlueprintReadWrite)
 	float defense;
 
 	UPROPERTY(VisibleAnywhere)
@@ -40,6 +44,9 @@ public:
 	float GetHP();
 
 	UFUNCTION(BlueprintCallable)
+	float GetSpeed();
+
+	UFUNCTION(BlueprintCallable)
 	void SetStat(float _hp, float _moveSpeed);
 
 	UPROPERTY()
@@ -47,6 +54,8 @@ public:
 
 	UPROPERTY()
 	USceneComponent* uiRoot;
+
+	FTimerHandle timer;
 
 protected:
 	// Called when the game starts
@@ -61,4 +70,11 @@ public:
 	void SetNextPos(ABaseField* field, int index);
 
 	void Damage(float attack);
+
+	void SetTimer(float time, FTimerDelegate const& InDelegate);
+	void ClearTimer();
+	void ResetSpeedWeight();
+
+	void ApplySlowEffect(float time);
+	void EndSlowEffect();
 };
