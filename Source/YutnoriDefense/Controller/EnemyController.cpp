@@ -76,6 +76,11 @@ float UEnemyController::GetHP()
 	return hp;
 }
 
+float UEnemyController::GetMaxHP()
+{
+	return maxHp;
+}
+
 float UEnemyController::GetSpeed()
 {
 	return moveSpeed * speedWeight;
@@ -84,6 +89,7 @@ float UEnemyController::GetSpeed()
 void UEnemyController::SetStat(float _hp, float _moveSpeed)
 {
 	this->hp = _hp;
+	this->maxHp = _hp;
 	this->moveSpeed = _moveSpeed;
 }
 

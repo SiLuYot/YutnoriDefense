@@ -174,8 +174,43 @@ void SkillContoller::Attack(SkillActor skill)
 		//추가 이펙트 없음
 		if (skill.createData.data.effectType == 0)
 		{
-			if (targetObj != nullptr)
-				targetObj->Damage(attack);
+			//광역 범위 있음
+			if (skill.createData.data.effectArea != 0)
+			{
+				for (TActorIterator<AActor> It(targetActor->GetWorld()); It; ++It)
+				{
+					AActor* findActor = *It;
+					if (findActor == nullptr)
+					{
+						continue;
+					}
+
+					//범위 안 적 찾기
+					if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+					{
+						auto distance = targetActor->GetDistanceTo(findActor);
+
+						//범위 안에 있다면
+						auto skillRange = skill.createData.data.effectArea * EFFECT_DISTANCE;
+						//범위가 너무 작은 경우 조금 넓혀줌
+						skillRange = skillRange <= 130 ? 150 : skillRange;
+
+						if (distance <= skillRange)
+						{
+							auto target = findActor->FindComponentByClass<UEnemyController>();
+
+							if (target != nullptr)
+								target->Damage(attack);
+						}
+					}
+				}
+			}
+			//단일
+			else
+			{
+				if (targetObj != nullptr)
+					targetObj->Damage(attack);
+			}
 		}
 		//단일 슬로우
 		else if (skill.createData.data.effectType == 1)
@@ -224,8 +259,35 @@ void SkillContoller::Attack(SkillActor skill)
 		//최대 체력 % 데미지
 		else if (skill.createData.data.effectType == 3)
 		{
-			if (targetObj != nullptr)
-				targetObj->Damage(attack);
+			//월드의 모든 액터 검색
+			for (TActorIterator<AActor> It(targetActor->GetWorld()); It; ++It)
+			{
+				AActor* findActor = *It;
+				if (findActor == nullptr)
+				{
+					continue;
+				}
+
+				//범위 안 적 찾기
+				if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+				{
+					auto distance = targetActor->GetDistanceTo(findActor);
+
+					//범위 안에 있다면
+					auto skillRange = skill.createData.data.effectArea * EFFECT_DISTANCE;
+					//범위가 너무 작은 경우 조금 넓혀줌
+					skillRange = skillRange <= 130 ? 150 : skillRange;
+
+					if (distance <= skillRange)
+					{
+						auto target = findActor->FindComponentByClass<UEnemyController>();
+						
+						auto finalAttack = attack + (target->GetMaxHP() * skill.createData.data.effectValue);
+						if (target != nullptr)
+							target->Damage(finalAttack);
+					}
+				}
+			}			
 		}
 	}	
 }

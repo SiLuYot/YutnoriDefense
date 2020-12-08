@@ -23,6 +23,9 @@ public:
 	float hp;
 
 	UPROPERTY(BlueprintReadWrite)
+	float maxHp;
+
+	UPROPERTY(BlueprintReadWrite)
 	float moveSpeed;
 
 	UPROPERTY(BlueprintReadWrite)
@@ -42,6 +45,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetHP();
+
+	UFUNCTION(BlueprintCallable)
+	float GetMaxHP();
 
 	UFUNCTION(BlueprintCallable)
 	float GetSpeed();
