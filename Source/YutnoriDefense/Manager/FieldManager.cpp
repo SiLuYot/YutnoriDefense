@@ -59,6 +59,7 @@ AFieldManager::AFieldManager()
 
 void AFieldManager::Wave1Start()
 {
+	isPlayBattleBGM = true;
 	for (int i = 0; i < 45; i++)
 	{
 		spawnEnemyQueue.Enqueue(enemyPawn_BP);
@@ -67,6 +68,7 @@ void AFieldManager::Wave1Start()
 
 void AFieldManager::Wave2Start()
 {
+	isPlayBattleBGM = true;
 	for (int i = 0; i < 15; i++)
 	{
 		spawnEnemyQueue.Enqueue(enemyPawn_BP);
@@ -77,6 +79,7 @@ void AFieldManager::Wave2Start()
 
 void AFieldManager::Wave3Start()
 {
+	isPlayBattleBGM = true;
 	for (int i = 0; i < 9; i++)
 	{
 		spawnEnemyQueue.Enqueue(enemyPawn_BP);
@@ -88,7 +91,8 @@ void AFieldManager::Wave3Start()
 }
 
 void AFieldManager::Wave4Start()
-{	
+{
+	isPlayBattleBGM = true;
 	for (int i = 0; i < 9; i++)
 	{
 		spawnEnemyQueue.Enqueue(enemyPawn_BP);
@@ -141,7 +145,9 @@ void AFieldManager::Tick(float DeltaTime)
 
 	if (spawnEnemyQueue.IsEmpty() && fieldEnemyArray.Num() <= 0)
 	{
+		isPlayBattleBGM = false;
 		isRestTime = true;
+
 		waveRestTimer += DeltaTime;
 		if (waveRestTimer > waveRestTime)
 		{
