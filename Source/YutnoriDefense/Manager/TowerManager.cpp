@@ -159,7 +159,7 @@ ATowerManager::ATowerManager()
 	towerDataArray.Add(FTowerData(14, 4, 2, tower_Mo_BP_3, skillData15));
 }
 
-void ATowerManager::ClickFieldEvent(ABaseField* field)
+void ATowerManager::ClickFieldEvent(ABaseField* field, FTowerData data)
 {
 	UE_LOG(LogTemp, Log, TEXT("Click FieldName :: %s"), *field->GetActorLabel());
 
@@ -176,9 +176,7 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 			SpawnParams.Owner = this;
 			SpawnLocation = field->GetActorLocation();
 
-			//타워 데이터 임시로 랜덤으로 가져옴 (각 타워 1단계들만)
-			auto rand = FMath::RandRange(0, 4) * 3;
-			auto findData = towerDataArray[rand];
+			auto findData = data;
 
 			//타워가 설치 가능하고
 			if (towerField->IsCanInstallType(findData.type))
@@ -187,11 +185,11 @@ void ATowerManager::ClickFieldEvent(ABaseField* field)
 				if (towerField->IsSameType(findData.type))
 				{
 					auto originID = towerField->towerData.index;
-					auto originType = towerField->towerData.type;					
-										
+					auto originType = towerField->towerData.type;
+
 					int nextID = originID + 1;
 					//다음 ID가 배열 범위 안에 있을때
-					if (nextID < towerDataArray.Num()) 
+					if (nextID < towerDataArray.Num())
 					{
 						auto newData = towerDataArray[nextID];
 						//다음 데이터가 같은 타입일때

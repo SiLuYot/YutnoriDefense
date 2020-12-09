@@ -32,6 +32,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//UFUNCTION(BlueprintCallable)
+	//void ClickFieldEvent(ABaseField* field);
+
 	UFUNCTION(BlueprintCallable)
-	void ClickFieldEvent(ABaseField* field);
+	void ClickFieldEvent(ABaseField* field, FTowerData data);
 };

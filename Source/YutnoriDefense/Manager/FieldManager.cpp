@@ -53,7 +53,7 @@ AFieldManager::AFieldManager()
 	enemySpawnTime = 1.0f;
 	waveRestTime = 10.0f;
 	deathCount = 0;
-	yut = 0;
+	yut = 3;
 	isRestTime = false;
 }
 
