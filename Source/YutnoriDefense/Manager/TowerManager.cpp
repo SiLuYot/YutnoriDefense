@@ -159,7 +159,7 @@ ATowerManager::ATowerManager()
 	towerDataArray.Add(FTowerData(14, 4, 2, tower_Mo_BP_3, skillData15));
 }
 
-void ATowerManager::ClickFieldEvent(ABaseField* field, FTowerData data)
+bool ATowerManager::ClickFieldEvent(ABaseField* field, FTowerData data)
 {
 	UE_LOG(LogTemp, Log, TEXT("Click FieldName :: %s"), *field->GetActorLabel());
 
@@ -207,6 +207,8 @@ void ATowerManager::ClickFieldEvent(ABaseField* field, FTowerData data)
 
 							//타워필드에 생성한 타워 설치
 							towerField->InstallTower(newData, newActorControll);
+
+							return true;
 						}
 					}
 				}
@@ -222,10 +224,14 @@ void ATowerManager::ClickFieldEvent(ABaseField* field, FTowerData data)
 
 					//타워필드에 생성한 타워 설치
 					towerField->InstallTower(findData, newActorControll);
+
+					return true;
 				}
 			}
 		}
 	}
+
+	return false;
 }
 
 // Called when the game starts or when spawned

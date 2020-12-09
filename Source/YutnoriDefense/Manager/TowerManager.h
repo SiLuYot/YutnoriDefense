@@ -36,5 +36,5 @@ public:
 	//void ClickFieldEvent(ABaseField* field);
 
 	UFUNCTION(BlueprintCallable)
-	void ClickFieldEvent(ABaseField* field, FTowerData data);
+	bool ClickFieldEvent(ABaseField* field, FTowerData data);
 };
