@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "BaseField.h"
 #include "YutnoriDefense/Controller/TowerController.h"
+#include "YutnoriDefense/Manager/CustomStruct.h"
 #include "TowerField.generated.h"
 
 /**
@@ -16,7 +17,9 @@ class YUTNORIDEFENSE_API ATowerField : public ABaseField
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(BlueprintReadOnly)
 	FTowerData towerData;
+
 	UTowerController* installTower;	
 	
 	ATowerField();
