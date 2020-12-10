@@ -108,13 +108,144 @@ void UEnemyController::ResetSpeedWeight()
 	speedWeight = 1.0f;
 }
 
+void UEnemyController::ResetHealWeight()
+{
+}
+
+void UEnemyController::ResetDefenseWeight()
+{
+	defense = 0.0f;
+}
+
+void UEnemyController::SpeedAura()
+{
+	auto targetActor = GetOwner();
+
+	for (TActorIterator<AActor> It(targetActor->GetWorld()); It; ++It)
+	{
+		AActor* findActor = *It;
+		if (findActor == nullptr)
+		{
+			continue;
+		}
+
+		//범위 안 적 찾기
+		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+		{
+			auto distance = targetActor->GetDistanceTo(findActor);
+
+			//범위 안에 있다면
+			auto skillRange = 200;
+			//범위가 너무 작은 경우 조금 넓혀줌
+
+			if (distance <= skillRange)
+			{
+				auto target = findActor->FindComponentByClass<UEnemyController>();
+
+				target->speedWeight = 1.2f;
+				target->ApplySlowEffect(3.0f);
+			}
+		}
+	}
+}
+
+void UEnemyController::HealAura()
+{
+	auto targetActor = GetOwner();
+
+	for (TActorIterator<AActor> It(targetActor->GetWorld()); It; ++It)
+	{
+		AActor* findActor = *It;
+		if (findActor == nullptr)
+		{
+			continue;
+		}
+
+		//범위 안 적 찾기
+		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+		{
+			auto distance = targetActor->GetDistanceTo(findActor);
+
+			//범위 안에 있다면
+			auto skillRange = 200;
+			//범위가 너무 작은 경우 조금 넓혀줌
+
+			if (distance <= skillRange)
+			{
+				auto target = findActor->FindComponentByClass<UEnemyController>();
+
+				target->hp += 20;
+				if (target->hp >= target->maxHp)
+				{
+					target->hp = target->maxHp;
+				}
+				target->ApplyHealEffect(3.0f);
+			}
+		}
+	}
+}
+
+void UEnemyController::DefenseAura()
+{
+	auto targetActor = GetOwner();
+
+	for (TActorIterator<AActor> It(targetActor->GetWorld()); It; ++It)
+	{
+		AActor* findActor = *It;
+		if (findActor == nullptr)
+		{
+			continue;
+		}
+
+		//범위 안 적 찾기
+		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+		{
+			auto distance = targetActor->GetDistanceTo(findActor);
+
+			//범위 안에 있다면
+			auto skillRange = 200;
+			//범위가 너무 작은 경우 조금 넓혀줌
+
+			if (distance <= skillRange)
+			{
+				auto target = findActor->FindComponentByClass<UEnemyController>();
+
+				target->defense = 20.0f;
+				target->ApplyDefenseEffect(3.0f);
+			}
+		}
+	}
+}
+
 void UEnemyController::ApplySlowEffect(float time)
 {
 	GetOwner()->GetWorldTimerManager().SetTimer(timer, this, &UEnemyController::EndSlowEffect, time, false);
 }
 
+void UEnemyController::ApplyHealEffect(float time)
+{
+	GetOwner()->GetWorldTimerManager().SetTimer(timer, this, &UEnemyController::EndHealEffect, time, false);
+}
+
+void UEnemyController::ApplyDefenseEffect(float time)
+{
+	GetOwner()->GetWorldTimerManager().SetTimer(timer, this, &UEnemyController::EndDefenseEffect, time, false);
+}
+
 void UEnemyController::EndSlowEffect()
 {
 	ResetSpeedWeight();
+	ClearTimer();
+}
+
+void UEnemyController::EndHealEffect()
+{
+	ResetHealWeight();
+	ClearTimer();
+}
+
+void UEnemyController::EndDefenseEffect()
+{
+	ResetDefenseWeight();
 	ClearTimer();
 }

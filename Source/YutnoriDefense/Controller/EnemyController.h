@@ -7,6 +7,7 @@
 #include "YutnoriDefense/Field/EnemyMoveField.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Runtime/Engine/Public/TimerManager.h"
+#include "Engine/Public/EngineUtils.h"
 #include "EnemyController.generated.h"
 
 
@@ -80,7 +81,23 @@ public:
 	void SetTimer(float time, FTimerDelegate const& InDelegate);
 	void ClearTimer();
 	void ResetSpeedWeight();
+	void ResetHealWeight();
+	void ResetDefenseWeight();
+
+	UFUNCTION(BlueprintCallable)
+	void SpeedAura();
+
+	UFUNCTION(BlueprintCallable)
+	void HealAura();
+
+	UFUNCTION(BlueprintCallable)
+	void DefenseAura();
 
 	void ApplySlowEffect(float time);
+	void ApplyHealEffect(float time);
+	void ApplyDefenseEffect(float time);
+
 	void EndSlowEffect();
+	void EndHealEffect();
+	void EndDefenseEffect();
 };
