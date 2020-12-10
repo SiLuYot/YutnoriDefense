@@ -55,6 +55,7 @@ AFieldManager::AFieldManager()
 	deathCount = 0;
 	yut = 3;
 	isRestTime = false;
+	isClear = false;
 }
 
 void AFieldManager::Wave1Start()
@@ -176,6 +177,7 @@ void AFieldManager::Tick(float DeltaTime)
 			else 
 			{
 				//Å¬¸®¾î
+				isClear = true;
 			}
 		}
 	}

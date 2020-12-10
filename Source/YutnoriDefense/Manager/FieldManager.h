@@ -39,6 +39,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool isPlayBattleBGM;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool isClear;
+
 	UPROPERTY(EditAnywhere)
 	float enemySpawnTimer;
 
