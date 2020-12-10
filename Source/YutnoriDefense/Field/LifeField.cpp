@@ -7,7 +7,7 @@ void ALifeField::BeginPlay()
 {
     Super::BeginPlay();
 
-    playerHP = 10;
+    playerHP = 20;
 }
 
 void ALifeField::NotifyActorBeginOverlap(AActor* OtherActor)
