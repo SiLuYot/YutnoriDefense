@@ -68,8 +68,14 @@ void UEnemyController::SetNextPos(ABaseField* field, int32 index)
 
 void UEnemyController::Damage(float attack)
 {
-	hp -= (attack - defense);
+	if (attack - defense < 0) {
+		
+	}
+	else {
+		hp -= (attack - defense);
+	}
 }
+	
 
 float UEnemyController::GetHP()
 {
@@ -204,7 +210,6 @@ void UEnemyController::DefenseAura()
 
 			//범위 안에 있다면
 			auto skillRange = 200;
-			//범위가 너무 작은 경우 조금 넓혀줌
 
 			if (distance <= skillRange)
 			{
@@ -212,6 +217,36 @@ void UEnemyController::DefenseAura()
 
 				target->defense = 20.0f;
 				target->ApplyDefenseEffect(3.0f);
+			}
+		}
+	}
+}
+
+void UEnemyController::InvincibleAura()
+{
+	auto targetActor = GetOwner();
+
+	for (TActorIterator<AActor> It(targetActor->GetWorld()); It; ++It)
+	{
+		AActor* findActor = *It;
+		if (findActor == nullptr)
+		{
+			continue;
+		}
+	
+		//범위 안 적 찾기
+		if (findActor->ActorHasTag(FName(TEXT("Enemy"))))
+		{
+			auto distance = targetActor->GetDistanceTo(findActor);
+
+			auto skillRange = 200;
+			if (distance == 0.0f)
+			{
+				this->defense = 0.0f;
+			}
+			else if (distance <= skillRange)
+			{	
+				this->defense = 1000.0f;
 			}
 		}
 	}

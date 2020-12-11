@@ -93,6 +93,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DefenseAura();
 
+	UFUNCTION(BlueprintCallable)
+	void InvincibleAura();
+
+
 	void ApplySlowEffect(float time);
 	void ApplyHealEffect(float time);
 	void ApplyDefenseEffect(float time);
