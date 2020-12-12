@@ -141,14 +141,14 @@ void UEnemyController::SpeedAura()
 			auto distance = targetActor->GetDistanceTo(findActor);
 
 			//범위 안에 있다면
-			auto skillRange = 200;
+			auto skillRange = 100;
 			//범위가 너무 작은 경우 조금 넓혀줌
 
 			if (distance <= skillRange)
 			{
 				auto target = findActor->FindComponentByClass<UEnemyController>();
 
-				target->speedWeight = 1.2f;
+				target->speedWeight = 3.0f;
 				target->ApplySlowEffect(3.0f);
 			}
 		}
@@ -180,7 +180,7 @@ void UEnemyController::HealAura()
 			{
 				auto target = findActor->FindComponentByClass<UEnemyController>();
 
-				target->hp += 20;
+				target->hp += 10;
 				if (target->hp >= target->maxHp)
 				{
 					target->hp = target->maxHp;
@@ -215,7 +215,7 @@ void UEnemyController::DefenseAura()
 			{
 				auto target = findActor->FindComponentByClass<UEnemyController>();
 
-				target->defense = 20.0f;
+				target->defense = 5.0f;
 				target->ApplyDefenseEffect(3.0f);
 			}
 		}
