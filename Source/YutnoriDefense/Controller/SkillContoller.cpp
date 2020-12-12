@@ -118,7 +118,14 @@ void SkillContoller::Update(float DeltaTime)
 
 				auto diff = targetSkillPos - curSkillPos;
 
-				if (diff.Size() > 3.0f)
+				if (skill.createData.targetActor == NULL || 
+					!skill.createData.targetActor->IsValidLowLevel())
+				{
+					skill.actor->Destroy();
+					skill.actor = nullptr;
+					removeArray.Add(i);
+				}
+				else if (diff.Size() > 3.0f)
 				{
 					diff.Normalize();
 
