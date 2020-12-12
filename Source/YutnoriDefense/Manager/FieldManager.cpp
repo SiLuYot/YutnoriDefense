@@ -146,6 +146,13 @@ void AFieldManager::Tick(float DeltaTime)
 
 	if (spawnEnemyQueue.IsEmpty() && fieldEnemyArray.Num() <= 0)
 	{
+		//스테이지가 4 이상이면
+		if (stage >= 4)
+		{
+			//클리어
+			isClear = true;
+		}
+
 		isPlayBattleBGM = false;
 		isRestTime = true;
 
@@ -173,11 +180,6 @@ void AFieldManager::Tick(float DeltaTime)
 			else if (stage == 4)
 			{
 				Wave4Start();
-			}
-			else 
-			{
-				//클리어
-				isClear = true;
 			}
 		}
 	}
