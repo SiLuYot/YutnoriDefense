@@ -113,41 +113,45 @@ void SkillContoller::Update(float DeltaTime)
 		case SkillType::TraceAndExplosion:
 			if (skill.actor != nullptr)
 			{
-				auto curSkillPos = skill.actor->GetActorLocation();
-				auto targetSkillPos = skill.createData.targetActor->GetActorLocation() + FVector(0, 0, 70);
-
-				auto diff = targetSkillPos - curSkillPos;
-
-				if (skill.createData.targetActor == NULL || 
+				if (skill.createData.targetActor == nullptr ||
 					!skill.createData.targetActor->IsValidLowLevel())
 				{
 					skill.actor->Destroy();
 					skill.actor = nullptr;
 					removeArray.Add(i);
 				}
-				else if (diff.Size() > 3.0f)
+				else 
 				{
-					diff.Normalize();
+					auto curSkillPos = skill.actor->GetActorLocation();
+					auto targetSkillPos = skill.createData.targetActor->GetActorLocation() + FVector(0, 0, 70);
 
-					auto newPos = diff * 500.0f;
-					auto nextPos = curSkillPos + newPos * DeltaTime;
+					auto diff = targetSkillPos - curSkillPos;
 
-					skill.actor->SetActorLocation(nextPos);
-				}
-				else
-				{
-					auto location = skill.actor->GetActorLocation();
-					auto rotation = skill.actor->GetActorRotation();
 
-					Attack(skill);
-					skill.actor->Destroy();
-					skill.actor = nullptr;
-					removeArray.Add(i);
-
-					int explosionIndex = skill.createData.data.id + 1;
-					if (particleArray[explosionIndex] != nullptr)
+					if (diff.Size() > 3.0f)
 					{
-						world->SpawnActor<AActor>(particleArray[explosionIndex], location, rotation);
+						diff.Normalize();
+
+						auto newPos = diff * 500.0f;
+						auto nextPos = curSkillPos + newPos * DeltaTime;
+
+						skill.actor->SetActorLocation(nextPos);
+					}
+					else
+					{
+						auto location = skill.actor->GetActorLocation();
+						auto rotation = skill.actor->GetActorRotation();
+
+						Attack(skill);
+						skill.actor->Destroy();
+						skill.actor = nullptr;
+						removeArray.Add(i);
+
+						int explosionIndex = skill.createData.data.id + 1;
+						if (particleArray[explosionIndex] != nullptr)
+						{
+							world->SpawnActor<AActor>(particleArray[explosionIndex], location, rotation);
+						}
 					}
 				}
 			}
