@@ -163,7 +163,10 @@ void SkillContoller::Update(float DeltaTime)
 	{
 		for (int i = 0; i < removeArray.Num(); i++)
 		{
-			skillActorArray.RemoveAt(removeArray[i]);
+			if (skillActorArray.IsValidIndex(removeArray[i]))
+			{
+				skillActorArray.RemoveAt(removeArray[i]);
+			}			
 		}
 		removeArray.Reset();
 	}
